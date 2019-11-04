@@ -1,0 +1,24 @@
+ul {
+    margin: 0;
+    text-align: center;
+}
+
+li{
+    text-decoration: none;
+    list-style-type: none;
+}
+
+p {
+    color: white;
+    margin: 0
+}
+
+.footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 10vh;
+    width: 100%;
+    background-color: #5cdb95;
+    line-height: 1.8;
+}
