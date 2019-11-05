@@ -13,7 +13,7 @@
     color: white;
     
     /* Background styles */
-    background-image: linear-gradient(rgba(0, 0, 0, 0.4),rgba(0, 0, 0, 0.5)), url("../../front-end-assets/splash.jpg");
+    background-image: linear-gradient(rgba(0, 0, 0, 0.2),rgba(0, 0, 0, 0.5)), url("../../front-end-assets/splash.jpg");
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;

@@ -88,13 +88,15 @@ export default class SignUp extends Component {
                             </span>
                         </label>
                     </div>
-                    <Checkout price={this.state.numOfMonths * 5} />
-                    <h4>
-                        Total is: $
-                        {this.state.numOfMonths === null
-                            ? 0
-                            : this.state.numOfMonths * 5}
-                    </h4>
+                    <div className="checkout-form">
+                        <Checkout price={this.state.numOfMonths * 5} />
+                        <h4>
+                            Total is: $
+                            {this.state.numOfMonths === null
+                                ? 0
+                                : this.state.numOfMonths * 5}
+                        </h4>
+                    </div>
                 </div>
             </div>
         );

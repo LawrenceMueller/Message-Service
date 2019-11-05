@@ -4,33 +4,34 @@
     margin-right: auto;
     margin-top: 40px;
     margin-bottom: 40px;
-    background-color: #5cdb95;
+    background-color: #9a3334;
     padding: 10px;
     border-radius: 25px;
-  }
-  .google_input {
+}
+
+.google_input {
     padding: 0.5rem 1rem;
     font-size: 1.2rem;
     border-radius: 5px;
     outline: 0;
-    border: 1px solid #F1F3F4;
-    background: #F1F3F4;
+    border: 1px solid #f1f3f4;
+    background: #f1f3f4;
     transition: all 200ms;
     width: 60%;
     margin: 0.5rem 0.5rem;
     margin-left: 0;
     z-index: -1;
-  }
-  .google_input:focus {
-    background: #FFF;
+}
+.google_input:focus {
+    background: #fff;
     box-shadow: 1px 3px 5px 1px #e1e1e1;
-    border-color: #F1F3F4;
-  }
-  .group {
+    border-color: #f1f3f4;
+}
+.group {
     display: block;
     margin-top: 20px;
-  }
-  label {
+}
+label {
     width: fit-content;
     margin: 0.5rem;
     display: block;
@@ -40,63 +41,78 @@
     font-family: Sans-Serif;
     font-weight: 300;
     z-index: 1;
-  }
-  label:hover {
-    cursor: pointer;
-  }
-  .formBtn {
+    color: white;
+}
+
+.formBtn {
     padding: 1rem 2rem;
     font-size: 1.2rem;
     border-radius: 10px;
     background: #eeeeee;
-    border: 1px solid #F1F3F4;
+    border: 1px solid #f1f3f4;
     color: #000;
     margin: 1rem;
     margin-left: 0;
     transition: all 200ms;
-  }
-  .formBtn:hover {
+}
+.formBtn:hover {
     cursor: pointer;
     background: skyblue;
     color: #000;
     border-color: #abf2b0;
     box-shadow: 1px 2px 5px 0px #e1e1e1;
-  }
+}
 
-  .special-label{
-      margin-bottom: 5px;
-      margin-right: 5px;
-  }
+.special-label {
+    margin-bottom: 5px;
+    margin-right: 5px;
+}
 
-  #terms{
+#terms {
     margin-bottom: 12px;
-    font-size: .9em;
-  }
+    font-size: 0.9em;
+}
 
-  #terms > span{
-    color: white;
-  }
+#terms > span {
+    color: #3399ff;
+}
 
-  #terms > span > a{
+#terms > span > a {
     text-decoration: none;
-  }
+    cursor: pointer;
+}
 
-  #terms > span > a:visited{
-    color: white;
-  }
+#terms > span > a:visited {
+    color: #3399ff;
+}
 
-  h4{
+h4 {
     display: inline;
     margin-left: 10px;
-  }
+    color: white;
+}
 
-  select {
+select {
     width: 100%;
     padding: 5px 35px 5px 5px;
     font-size: 16px;
-    border: 1px solid #CCC;
+    border: 1px solid #ccc;
     height: 34px;
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-  }
+}
+
+.checkout-form {
+    margin-top: 15px;
+    margin-left: 8px;
+    margin-bottom: 5px;
+}
+
+@media only screen and (max-width: 400px) {
+  h4 {
+    display: block;
+    margin-left: 10px;
+    color: white;
+}
+}
