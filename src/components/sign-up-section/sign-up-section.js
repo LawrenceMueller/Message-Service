@@ -1,17 +1,21 @@
 import React, { Component } from 'react';
 import './sign-up-section_styles.css';
 import Checkout from '../Stripe-Checkout/CheckoutForm';
+import { parsePhoneNumberFromString } from 'libphonenumber-js';
 
 export default class SignUp extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            country: 'USA',
-            numOfMonths: 0
+            country: '',
+            numOfMonths: 0,
+            phoneNumber: ''
         };
 
         this.countryChange = this.countryChange.bind(this);
         this.monthsChange = this.monthsChange.bind(this);
+        this.phoneChange = this.phoneChange.bind(this);
+        this.phoneClean = this.phoneClean.bind(this);
     }
 
     countryChange(event) {
@@ -26,20 +30,43 @@ export default class SignUp extends Component {
         });
     }
 
+    phoneChange(event) {
+        this.setState({
+            phoneNumber: event.target.value
+        });
+    }
+
+    phoneClean() {
+        let phoneCombo;
+        if (this.state.country[0] !== '+') {
+            phoneCombo = '+' + this.state.country + this.state.phoneNumber;
+            const finalPhone = parsePhoneNumberFromString(phoneCombo);
+            console.log('here');
+            return finalPhone.isValid ? finalPhone.number : 'invalid-phone';
+        } else {
+            phoneCombo = this.state.country + this.state.phoneNumber;
+            const finalPhone = parsePhoneNumberFromString(phoneCombo);
+            console.log('here');
+            return finalPhone.isValid ? finalPhone.number : 'invalid-phone';
+        }
+    }
+
     render() {
         return (
             <div>
                 <div className="container">
                     <div className="group">
-                        <label className="special-label">Country</label>
-                        <select
+                        <label className="special-label">
+                            Country Phone Code
+                        </label>
+                        <input
+                            className="google_input"
+                            type="text"
                             value={this.state.country}
                             onChange={this.countryChange}
-                        >
-                            <option value="USA">USA</option>
-                            <option value="CAN">Canada</option>
-                            <option value="UK">United Kingdom</option>
-                        </select>
+                            placeholder='ex: USA is "+1"'
+                            id="phone"
+                        />
                     </div>
                     <div className="group">
                         <label className="special-label">
@@ -49,6 +76,7 @@ export default class SignUp extends Component {
                             value={this.state.numOfMonths}
                             onChange={this.monthsChange}
                         >
+                            <option value="0">0</option>
                             <option value="1">1</option>
                             <option value="2">2</option>
                             <option value="3">3</option>
@@ -68,6 +96,8 @@ export default class SignUp extends Component {
                         <input
                             className="google_input"
                             type="text"
+                            value={this.state.phoneNumber}
+                            onChange={this.phoneChange}
                             placeholder="xxx-xxx-xxxx"
                             id="phone"
                         />
@@ -89,7 +119,10 @@ export default class SignUp extends Component {
                         </label>
                     </div>
                     <div className="checkout-form">
-                        <Checkout price={this.state.numOfMonths * 5} />
+                        <Checkout
+                            price={this.state.numOfMonths * 5}
+                            phone={this.phoneClean}
+                        />
                         <h4>
                             Total is: $
                             {this.state.numOfMonths === null
