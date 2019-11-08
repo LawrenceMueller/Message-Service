@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import './sign-up-section_styles.css';
-import Checkout from '../Stripe-Checkout/CheckoutForm';
 import { parsePhoneNumberFromString } from 'libphonenumber-js';
+import StripeCheckout from 'react-stripe-checkout';
+import axios from 'axios';
 
 export default class SignUp extends Component {
     constructor(props) {
@@ -16,6 +17,7 @@ export default class SignUp extends Component {
         this.monthsChange = this.monthsChange.bind(this);
         this.phoneChange = this.phoneChange.bind(this);
         this.phoneClean = this.phoneClean.bind(this);
+        this.handleToken = this.handleToken.bind(this);
     }
 
     countryChange(event) {
@@ -49,6 +51,12 @@ export default class SignUp extends Component {
             console.log('here');
             return finalPhone.isValid ? finalPhone.number : 'invalid-phone';
         }
+    }
+
+    async handleToken(token) {
+        console.log(token);
+        const response = await axios.post('http://localhost:5000/checkout/payment', {token});
+        console.log(response.data);
     }
 
     render() {
@@ -119,9 +127,12 @@ export default class SignUp extends Component {
                         </label>
                     </div>
                     <div className="checkout-form">
-                        <Checkout
-                            price={this.state.numOfMonths * 5}
-                            phone={this.phoneClean}
+                        <StripeCheckout
+                            name="LGBT Through History"
+                            description="Texts about inflential LGBT people through out history"
+                            token={this.handleToken}
+                            stripeKey="pk_test_8Cs9sUYSZ6O7Ocqudc7qXwst00qjNJnECV"
+                            amount={this.props.price * 100}
                         />
                         <h4>
                             Total is: $

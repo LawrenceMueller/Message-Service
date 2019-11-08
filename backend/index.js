@@ -2,6 +2,9 @@ const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
 var scheduler = require('node-schedule');
+var router = express.Router();
+
+const SERVER_CONFIGS = require('./constants/backend');
 
 require('dotenv').config();
 
@@ -19,14 +22,14 @@ connection.once('open', () => {
     console.log('MongoDB database connection established successfully');
 });
 
-app.get('/', function(req, res) {
-    res.send('Hello World!');
-});
+const checkoutRouter = require('./routes/checkout');
+
+app.use('/checkout', checkoutRouter);
 
 app.listen(port, () => {
   console.log(`Server is running on port: ${port}`);
 });
 
-var dailyText = scheduler.scheduleJob('0 14 * * *', function() {
-    console.log('I run everyday at 2pm');
-});
+// var dailyText = scheduler.scheduleJob('0 14 * * *', function() {
+//     console.log('I run everyday at 2pm');
+// });
