@@ -121,9 +121,9 @@ export default class SignUp extends Component {
                     <div className="checkout-form">
                         <Checkout
                             name={"LGBT Through History"}
-                            description={"Daily Messages from LGBT Through History"}
+                            description={"Daily Messages from LGBT Through History for " + this.state.numOfMonths * 30 + " days"}
                             amount={this.state.numOfMonths * 500}
-                            phone={this.state.phoneNumber}
+                            phone={this.phoneClean}
                             credits={this.state.numOfMonths * 30}
                         />
                         <h4>
