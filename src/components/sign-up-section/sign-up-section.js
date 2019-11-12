@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import './sign-up-section_styles.css';
 import { parsePhoneNumberFromString } from 'libphonenumber-js';
-import StripeCheckout from 'react-stripe-checkout';
-import axios from 'axios';
+import Checkout from '../checkout/checkout';
 
 export default class SignUp extends Component {
     constructor(props) {
@@ -17,7 +16,6 @@ export default class SignUp extends Component {
         this.monthsChange = this.monthsChange.bind(this);
         this.phoneChange = this.phoneChange.bind(this);
         this.phoneClean = this.phoneClean.bind(this);
-        this.handleToken = this.handleToken.bind(this);
     }
 
     countryChange(event) {
@@ -51,12 +49,6 @@ export default class SignUp extends Component {
             console.log('here');
             return finalPhone.isValid ? finalPhone.number : 'invalid-phone';
         }
-    }
-
-    async handleToken(token) {
-        console.log(token);
-        const response = await axios.post('http://localhost:5000/checkout/payment', {token});
-        console.log(response.data);
     }
 
     render() {
@@ -127,12 +119,12 @@ export default class SignUp extends Component {
                         </label>
                     </div>
                     <div className="checkout-form">
-                        <StripeCheckout
-                            name="LGBT Through History"
-                            description="Texts about inflential LGBT people through out history"
-                            token={this.handleToken}
-                            stripeKey="pk_test_8Cs9sUYSZ6O7Ocqudc7qXwst00qjNJnECV"
-                            amount={this.props.price * 100}
+                        <Checkout
+                            name={"LGBT Through History"}
+                            description={"Daily Messages from LGBT Through History"}
+                            amount={this.state.numOfMonths * 500}
+                            phone={this.state.phoneNumber}
+                            credits={this.state.numOfMonths * 30}
                         />
                         <h4>
                             Total is: $

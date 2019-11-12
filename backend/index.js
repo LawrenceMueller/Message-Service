@@ -1,35 +1,14 @@
 const express = require('express');
-const cors = require('cors');
-const mongoose = require('mongoose');
-var scheduler = require('node-schedule');
-var router = express.Router();
+const SERVER_CONFIGS = require('./constants/server');
+const configureServer = require('./server');
+const configureRoutes = require('./routes');
 
-const SERVER_CONFIGS = require('./constants/backend');
+const app = express();
 
-require('dotenv').config();
+configureServer(app);
+configureRoutes(app);
 
-var app = express();
-const port = process.env.PORT || 5000;
-
-app.use(cors());
-app.use(express.json());
-
-const uri = process.env.ATLAS_URI;
-mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true });
-const connection = mongoose.connection;
-
-connection.once('open', () => {
-    console.log('MongoDB database connection established successfully');
+app.listen(SERVER_CONFIGS.PORT, error => {
+  if (error) throw error;
+  console.log('Server running on port: ' + SERVER_CONFIGS.PORT);
 });
-
-const checkoutRouter = require('./routes/checkout');
-
-app.use('/checkout', checkoutRouter);
-
-app.listen(port, () => {
-  console.log(`Server is running on port: ${port}`);
-});
-
-// var dailyText = scheduler.scheduleJob('0 14 * * *', function() {
-//     console.log('I run everyday at 2pm');
-// });
