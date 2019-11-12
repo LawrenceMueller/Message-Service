@@ -7,21 +7,12 @@ export default class SignUp extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            country: '',
             numOfMonths: 0,
             phoneNumber: ''
         };
 
-        this.countryChange = this.countryChange.bind(this);
         this.monthsChange = this.monthsChange.bind(this);
         this.phoneChange = this.phoneChange.bind(this);
-        this.phoneClean = this.phoneClean.bind(this);
-    }
-
-    countryChange(event) {
-        this.setState({
-            country: event.target.value
-        });
     }
 
     monthsChange(event) {
@@ -36,38 +27,10 @@ export default class SignUp extends Component {
         });
     }
 
-    phoneClean() {
-        let phoneCombo;
-        if (this.state.country[0] !== '+') {
-            phoneCombo = '+' + this.state.country + this.state.phoneNumber;
-            const finalPhone = parsePhoneNumberFromString(phoneCombo);
-            console.log('here');
-            return finalPhone.isValid ? finalPhone.number : 'invalid-phone';
-        } else {
-            phoneCombo = this.state.country + this.state.phoneNumber;
-            const finalPhone = parsePhoneNumberFromString(phoneCombo);
-            console.log('here');
-            return finalPhone.isValid ? finalPhone.number : 'invalid-phone';
-        }
-    }
-
     render() {
         return (
             <div>
                 <div className="container">
-                    <div className="group">
-                        <label className="special-label">
-                            Country Phone Code
-                        </label>
-                        <input
-                            className="google_input"
-                            type="text"
-                            value={this.state.country}
-                            onChange={this.countryChange}
-                            placeholder='ex: USA is "+1"'
-                            id="phone"
-                        />
-                    </div>
                     <div className="group">
                         <label className="special-label">
                             Number of months at $5 per month
@@ -98,7 +61,7 @@ export default class SignUp extends Component {
                             type="text"
                             value={this.state.phoneNumber}
                             onChange={this.phoneChange}
-                            placeholder="xxx-xxx-xxxx"
+                            placeholder="+xxxx-xxx-xxxx"
                             id="phone"
                         />
                         <label id="terms">
@@ -109,10 +72,10 @@ export default class SignUp extends Component {
                             <span>
                                 <a target="_blank">Privacy Policy, </a>
                             </span>{' '}
-                            and that all payment transaction will be handled
+                            and that all payment transactions will be handled
                             through{' '}
                             <span>
-                                <a target="_blank" href="https://stripe.com/">
+                                <a target="_blank" href="https://stripe.com/" rel="noopener noreferrer">
                                     Stripe.
                                 </a>
                             </span>

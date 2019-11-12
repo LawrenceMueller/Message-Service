@@ -4,14 +4,6 @@ import StripeCheckout from "react-stripe-checkout";
 import STRIPE_PUBLISHABLE from "../../constants/stripe";
 import PAYMENT_SERVER_URL from "../../constants/server";
 
-const successPayment = data => {
-  alert("Payment Successful");
-};
-
-const errorPayment = data => {
-  alert("Payment Error");
-};
-
 const onToken = (description, amount, phone, credits) => token => {
   const body = {
     amount: amount,
@@ -27,7 +19,7 @@ const onToken = (description, amount, phone, credits) => token => {
   console.log("credits: " + credits);
 
   axios
-    .post('http://localhost:8080/payment', body)
+    .post(PAYMENT_SERVER_URL, body)
     .then(response => {
       console.log(response);
       alert("Payment Success");
@@ -38,7 +30,7 @@ const onToken = (description, amount, phone, credits) => token => {
     });
 };
 
-const Checkout = (props, { name, description }) => (
+const Checkout = (props) => (
   <StripeCheckout
     name={props.name}
     description={props.description}
@@ -49,3 +41,19 @@ const Checkout = (props, { name, description }) => (
 );
 
 export default Checkout;
+
+
+// phoneClean() {
+//   let phoneCombo;
+//   if (this.state.country[0] !== '+') {
+//       phoneCombo = '+' + this.state.country + this.state.phoneNumber;
+//       const finalPhone = parsePhoneNumberFromString(phoneCombo);
+//       console.log('here');
+//       return finalPhone.isValid ? finalPhone.number : 'invalid-phone';
+//   } else {
+//       phoneCombo = this.state.country + this.state.phoneNumber;
+//       const finalPhone = parsePhoneNumberFromString(phoneCombo);
+//       console.log('here');
+//       return finalPhone.isValid ? finalPhone.number : 'invalid-phone';
+//   }
+// }

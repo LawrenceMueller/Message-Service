@@ -42,6 +42,7 @@ app.post("/payment", async (req, res) => {
         customer: customer.id,
         receipt_email: token.email,
         description: description,
+        receipt_email: token.email
       },
       {
         idempotency_key
