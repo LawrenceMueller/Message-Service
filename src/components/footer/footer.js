@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './footer_styles.css';
 
-export default class Splash extends Component {
+export default class Footer extends Component {
     render() {
         return (
             <div className="footer">

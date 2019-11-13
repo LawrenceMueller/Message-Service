@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import './sign-up-section_styles.css';
-import { parsePhoneNumberFromString } from 'libphonenumber-js';
 import Checkout from '../checkout/checkout';
 import TOS from '../TOS/TOS';
 import PP from '../PP/PP';
+import HIW from '../HowItWorks/howItWorks';
 
 export default class SignUp extends Component {
     constructor(props) {
@@ -54,6 +54,7 @@ export default class SignUp extends Component {
         }
         return (
             <div>
+                <HIW/>
                 <div className="container">
                     <div className="group">
                         <label className="special-label">
@@ -90,11 +91,11 @@ export default class SignUp extends Component {
                         />
                         <label id="terms">
                             By clicking "pay with card" you agree to the{' '}
-                            <span>
-                                <a onClick={this.handleTOS}>Terms of Service, </a>
+                            <span onClick={this.handleTOS}>
+                                Terms of Service,
                             </span>
-                            <span>
-                                <a onClick={this.handlePP}>Privacy Policy, </a>
+                            <span onClick={this.handlePP}>
+                                Privacy Policy,
                             </span>{' '}
                             and that all payment transactions will be handled
                             through{' '}

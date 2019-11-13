@@ -2,9 +2,6 @@ import React, { Component } from "react";
 import "./PP_styles.css";
 
 export default class PP extends Component {
-    constructor(props) {
-        super(props);
-    }
     render() {
         return (
         <div>

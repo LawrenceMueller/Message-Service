@@ -75,9 +75,10 @@ label {
 
 #terms > span {
     color: #3399ff;
+    text-decoration: none;
+    cursor: pointer;
 }
-
-#terms > span > a {
+#terms > span > a{
     text-decoration: none;
     cursor: pointer;
 }

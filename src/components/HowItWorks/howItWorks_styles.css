@@ -1,0 +1,22 @@
+.how-it-works-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    background-color: #9a3334;
+    line-height: 1.8;
+    color: white;
+}
+
+.how-it-works-container > h3 {
+    margin: 0;
+    padding: 0;
+    padding-top: 10px;
+} 
+
+.how-it-works-container > p {
+    color: white;
+    margin: 0;
+    padding: 5px 5px 10px 10px;
+}
