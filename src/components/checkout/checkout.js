@@ -41,19 +41,3 @@ const Checkout = (props) => (
 );
 
 export default Checkout;
-
-
-// phoneClean() {
-//   let phoneCombo;
-//   if (this.state.country[0] !== '+') {
-//       phoneCombo = '+' + this.state.country + this.state.phoneNumber;
-//       const finalPhone = parsePhoneNumberFromString(phoneCombo);
-//       console.log('here');
-//       return finalPhone.isValid ? finalPhone.number : 'invalid-phone';
-//   } else {
-//       phoneCombo = this.state.country + this.state.phoneNumber;
-//       const finalPhone = parsePhoneNumberFromString(phoneCombo);
-//       console.log('here');
-//       return finalPhone.isValid ? finalPhone.number : 'invalid-phone';
-//   }
-// }

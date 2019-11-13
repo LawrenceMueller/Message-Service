@@ -86,7 +86,7 @@ export default class SignUp extends Component {
                             type="text"
                             value={this.state.phoneNumber}
                             onChange={this.phoneChange}
-                            placeholder="+xxxx-xxx-xxxx"
+                            placeholder="+1444-444-4444"
                             id="phone"
                         />
                         <label id="terms">
