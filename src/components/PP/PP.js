@@ -31,7 +31,7 @@ export default class PP extends Component {
                         in order to send messages to the phone numbers and emails that
                         you provided. Any questions or concerns that you may have in
                         regards to the services provided by LBGT Through History should
-                        be directed to LGBTThoughHistoy@gmail.com.
+                        be directed to lbgtthroughhistory@gmail.com.
                     </p>
                     </div>
                 </div>

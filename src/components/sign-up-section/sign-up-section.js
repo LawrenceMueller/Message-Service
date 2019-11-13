@@ -111,7 +111,7 @@ export default class SignUp extends Component {
                             name={"LGBT Through History"}
                             description={"Daily Messages from LGBT Through History for " + this.state.numOfMonths * 30 + " days"}
                             amount={this.state.numOfMonths * 500}
-                            phone={this.phoneClean}
+                            phone={this.state.phoneNumber}
                             credits={this.state.numOfMonths * 30}
                         />
                         <h4>

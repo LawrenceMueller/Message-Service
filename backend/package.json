@@ -15,5 +15,8 @@
     "express": "^4.17.1",
     "stripe": "^7.13.0",
     "uuid": "^3.3.3"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.4"
   }
 }

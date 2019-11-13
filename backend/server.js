@@ -12,10 +12,6 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-app.get("/", (req, res) => {
-    res.send("Add your Stripe Secret Key to the .require('stripe') statement!");
-  });
-
 app.post("/payment", async (req, res) => {
 
   let error;
@@ -28,6 +24,7 @@ app.post("/payment", async (req, res) => {
     console.log("description: " + description);
     console.log("credits: " + credits);
     console.log("Email: " + token.email);
+    console.log("Token ID: " + token.id);
 
     const customer = await stripe.customers.create({
       email: token.email,
@@ -53,7 +50,6 @@ app.post("/payment", async (req, res) => {
     console.error("Error:", error);
     status = "failure";
   }
-
   res.json({ error, status });
 });
 
