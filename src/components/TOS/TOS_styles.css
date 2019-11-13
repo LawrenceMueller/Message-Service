@@ -1,0 +1,50 @@
+.tos-container{
+    background-color: #9A3334;
+    padding-top: 2.5%;
+    padding-bottom: 2.5%;
+    
+    /* Flexbox stuff */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    
+    /* Text styles */
+    text-align: center;
+    color: white;
+}
+
+.tos{
+    width: 90%;
+    height: 90%;
+    background-color: #ffffff;
+    color: black;
+    text-align: start;
+    padding-bottom: 10px;
+}
+
+.tos-content{
+    width: 90%;
+    margin-left: 5%;
+}
+
+.tos-content > h2{
+    text-align: center;
+    font-size: 2em;
+}
+
+.tos-content > p {
+    color: black;
+}
+
+.tos-btn{
+    font-size: 20px;
+    color: white;
+    text-align: center;
+    border-radius: 10px;
+    font-size: 21px;
+    background: #42A5F6;
+    padding: 15px 35px;
+    border: none;
+    margin-bottom: 5px;
+}

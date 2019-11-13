@@ -2,17 +2,23 @@ import React, { Component } from 'react';
 import './sign-up-section_styles.css';
 import { parsePhoneNumberFromString } from 'libphonenumber-js';
 import Checkout from '../checkout/checkout';
+import TOS from '../TOS/TOS';
+import PP from '../PP/PP';
 
 export default class SignUp extends Component {
     constructor(props) {
         super(props);
         this.state = {
             numOfMonths: 0,
-            phoneNumber: ''
+            phoneNumber: '',
+            tosPage: false,
+            ppPage: false
         };
 
         this.monthsChange = this.monthsChange.bind(this);
         this.phoneChange = this.phoneChange.bind(this);
+        this.handlePP = this.handlePP.bind(this);
+        this.handleTOS = this.handleTOS.bind(this);
     }
 
     monthsChange(event) {
@@ -27,7 +33,25 @@ export default class SignUp extends Component {
         });
     }
 
+    handleTOS(){
+        this.setState({
+            tosPage: !this.state.tosPage
+        });
+    }
+
+    handlePP(){
+        this.setState({
+            ppPage: !this.state.ppPage
+        });
+    }
+
     render() {
+        if(this.state.tosPage === true){
+            return <TOS backFromTOS={this.handleTOS}/>
+        }
+        if(this.state.ppPage === true){
+            return <PP backFromPP={this.handlePP}/>
+        }
         return (
             <div>
                 <div className="container">
@@ -67,10 +91,10 @@ export default class SignUp extends Component {
                         <label id="terms">
                             By clicking "pay with card" you agree to the{' '}
                             <span>
-                                <a target="_blank">Terms of Service, </a>
+                                <a onClick={this.handleTOS}>Terms of Service, </a>
                             </span>
                             <span>
-                                <a target="_blank">Privacy Policy, </a>
+                                <a onClick={this.handlePP}>Privacy Policy, </a>
                             </span>{' '}
                             and that all payment transactions will be handled
                             through{' '}
