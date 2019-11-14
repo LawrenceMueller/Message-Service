@@ -15,8 +15,8 @@ export default class TOS extends Component {
                         refer to the person or party accepting the terms of service.
                         “LBGT Through History” refers to the website at domain name
                         “https://LBGTThroughHistory.com”. “I”, “me”, “myself” all refer
-                        to the entity that owns and created the website LBGT Through
-                        History, which is the website that the this terms of service
+                        to the entity that created the website LBGT Through
+                        History, which is the website that this terms of service
                         agreement refers too.
                     </p>
                     <br />

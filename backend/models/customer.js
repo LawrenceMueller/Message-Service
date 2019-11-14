@@ -7,9 +7,6 @@ let CustomerSchema = new Schema({
         required: true,
         unique: true,
         lowercase: true,
-        validate: (value) => {
-          return validator.isEmail(value)
-        }
       },
     phoneNumber: {type: String, required: true, max: 20},
     credits: {type: Number, required: true},

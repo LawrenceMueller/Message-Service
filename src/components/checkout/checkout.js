@@ -23,7 +23,23 @@ const onToken = (description, amount, phone, credits) => token => {
     .post(PAYMENT_SERVER_URL, body)
     .then(response => {
       console.log(response.data);
-      alert("Payment Success");
+      
+      switch(response.data.error){
+        case "phone is invalid":
+          alert("phone is invalid");
+          break;
+        case "Number of days must not be 0":
+            alert("Number of days must not be 0");
+          break;
+        case "Something went wrong":
+            alert("Something went wrong, try again!");
+          break;
+        case "failure":
+            alert("Something went wrong on our side, try agian later.");
+          break;
+        default:
+          alert("Success");
+      }
     })
     .catch(error => {
       console.log("Payment Error: ", error);

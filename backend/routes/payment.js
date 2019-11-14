@@ -53,8 +53,9 @@ router.post('/', async (req, res) => {
                 source: token.id
             });
 
+             // Unique key to make sure customers are not charged twice
             const idempotency_key = uuid();
-            const charge = await stripe.charges
+            const charge = await stripe.charges // Charge the credit card
                 .create(
                     {
                         amount: amount,
@@ -68,13 +69,15 @@ router.post('/', async (req, res) => {
                         idempotency_key
                     }
                 )
+                // After charge is complete do database stuff
                 .then(() => {
                     console.log('customer id: ' + customer.id);
                     console.log('Payment was charged and now I can do shit'); //do db stuff
                 });
 
-            status = 'success';
+            status = 'success'; // If everything went well send back success
         }
+        // The user provided some form of invalid information
         else{
           if(phoneNumber === null || phoneNumber === undefined || !phoneNumber.isValid()){
             error = "phone is invalid";
