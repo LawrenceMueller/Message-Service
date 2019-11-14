@@ -72,7 +72,28 @@ router.post('/', async (req, res) => {
                 // After charge is complete do database stuff
                 .then(() => {
                     console.log('customer id: ' + customer.id);
-                    console.log('Payment was charged and now I can do shit'); //do db stuff
+                    const newCustomer = new customerModel({
+                        cEmail: token.email,
+                        phoneNumber: phoneNumber,
+                        credits: credits,
+                    });
+
+                    const newReceipt = new receiptModel({
+                        rEmail: token.email,
+                        phoneNumber: phoneNumber,
+                        credits: credits,
+                        customer_ID: customer.id,
+                        cardEnd: token.card.last4,
+                        cardBrand: token.card.brand
+                    });
+
+                    newCustomer.save()
+                    .then(console.log('saved customer'))
+                    .catch(err => (console.log(err)));
+
+                    newReceipt.save()
+                    .then(console.log('saved reciept'))
+                    .catch(err => (console.log(err)));
                 });
 
             status = 'success'; // If everything went well send back success

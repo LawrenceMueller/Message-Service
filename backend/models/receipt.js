@@ -2,10 +2,9 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 let ReceiptSchema = new Schema({
-    email: {
+    rEmail: {
         type: String,
         required: true,
-        unique: true,
         lowercase: true,
       },
     phoneNumber: {type: String, required: true, max: 20},
