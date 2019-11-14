@@ -1,0 +1,20 @@
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+
+let ReceiptSchema = new Schema({
+    email: {
+        type: String,
+        required: true,
+        unique: true,
+        lowercase: true,
+        validate: (value) => {
+          return validator.isEmail(value)
+        }
+      },
+    phoneNumber: {type: String, required: true, max: 20},
+    credits: {type: Number, required: true},
+}, {timestamps: true});
+
+
+// Export the model
+module.exports = mongoose.model('receipts', ReceiptSchema);

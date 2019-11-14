@@ -8,7 +8,7 @@ const onToken = (description, amount, phone, credits) => token => {
   const body = {
     amount: amount,
     token: token,
-    phone: phone,
+    phoneNumber: phone,
     description: description,
     credits: credits
   };

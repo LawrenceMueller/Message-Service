@@ -80,7 +80,7 @@ export default class SignUp extends Component {
                         </select>
                     </div>
                     <div className="group">
-                        <label>Phone</label>
+                        <label>Phone (with country code)</label>
                         <input
                             className="google_input"
                             type="text"

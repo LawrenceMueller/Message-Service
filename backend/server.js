@@ -1,56 +1,35 @@
+// Declare all dependencies
 const cors = require("cors");
 const express = require("express");
-const uuid = require("uuid/v4");
 const dotenv = require("dotenv");
+const mongoose = require('mongoose');
 
+// Configure dotenv for security purposes
 dotenv.config();
 
-const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
-
+// Create the constants needed for the application
+const URI = process.env.DB_CONNECTION_STRING;
 const app = express();
 
+// Connect to the database
+mongoose.connect(URI, { useUnifiedTopology: true, useNewUrlParser: true }).then(
+  () => {
+    console.log("Database connection established!");
+  },
+  err => {
+    console.log("Error connecting Database instance due to: ", err);
+  }
+);
+
+// This line just fixes a mongoose deprecation warning
+mongoose.set('useCreateIndex', true);
+
+// Define middleware
 app.use(express.json());
 app.use(cors());
 
-app.post("/payment", async (req, res) => {
+const paymentRouter = require('./routes/payment');
+app.use('/payment', paymentRouter);
 
-  let error;
-  let status;
-  try {
-    const { amount, token, phone, description, credits } = req.body;
-
-    console.log("amount: " + amount);
-    console.log("phone: " + phone);
-    console.log("description: " + description);
-    console.log("credits: " + credits);
-    console.log("Email: " + token.email);
-    console.log("Token ID: " + token.id);
-
-    const customer = await stripe.customers.create({
-      email: token.email,
-      source: token.id
-    });
-
-    const idempotency_key = uuid();
-    const charge = await stripe.charges.create(
-      {
-        amount: amount,
-        currency: "usd",
-        customer: customer.id,
-        receipt_email: token.email,
-        description: description,
-        receipt_email: token.email
-      },
-      {
-        idempotency_key
-      }
-    );
-    status = "success";
-  } catch (error) {
-    console.error("Error:", error);
-    status = "failure";
-  }
-  res.json({ error, status });
-});
-
+// Start the Web Server
 app.listen(8080, () => console.log("Listening on port 8080"));
