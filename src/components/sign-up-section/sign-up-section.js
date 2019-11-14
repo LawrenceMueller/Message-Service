@@ -58,25 +58,25 @@ export default class SignUp extends Component {
                 <div className="container">
                     <div className="group">
                         <label className="special-label">
-                            Number of months at $5 per month
+                            Number of days
                         </label>
                         <select
                             value={this.state.numOfMonths}
                             onChange={this.monthsChange}
                         >
                             <option value="0">0</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                            <option value="6">6</option>
-                            <option value="7">7</option>
-                            <option value="8">8</option>
-                            <option value="9">9</option>
-                            <option value="10">10</option>
-                            <option value="11">11</option>
-                            <option value="12">12</option>
+                            <option value="1">30 - $5</option>
+                            <option value="2">60 - $10</option>
+                            <option value="3">90 - $15</option>
+                            <option value="4">120 - $20</option>
+                            <option value="5">150 - $25</option>
+                            <option value="6">180 - $30</option>
+                            <option value="7">210 - $35</option>
+                            <option value="8">240 - $40</option>
+                            <option value="9">270 - $45</option>
+                            <option value="10">300 - $50</option>
+                            <option value="11">330 - $55</option>
+                            <option value="12">360 - $60</option>
                         </select>
                     </div>
                     <div className="group">

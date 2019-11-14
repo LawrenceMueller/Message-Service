@@ -5,6 +5,7 @@ import STRIPE_PUBLISHABLE from "../../constants/stripe";
 import PAYMENT_SERVER_URL from "../../constants/server";
 
 const onToken = (description, amount, phone, credits) => token => {
+
   const body = {
     amount: amount,
     token: token,
@@ -21,7 +22,7 @@ const onToken = (description, amount, phone, credits) => token => {
   axios
     .post(PAYMENT_SERVER_URL, body)
     .then(response => {
-      console.log(response);
+      console.log(response.data);
       alert("Payment Success");
     })
     .catch(error => {
