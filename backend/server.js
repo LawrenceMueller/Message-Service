@@ -44,26 +44,51 @@ app.listen(8080, () =>
 
 //Perform a basic SMS message send
 //cron.schedule("* * * * * *", function(){
-    // var message = client.messages.create({
-    //   body: 'Who do you think is a better DM? Tyler or Javi?',
-    //   from: '+12028311646',
-    //   to: '+16268249559'
-    // })
-    // .then(message =>  console.log(message.status))
-    // .done();
+// var message = client.messages.create({
+//   body: 'Who do you think is a better DM? Tyler or Javi?',
+//   from: '+12028311646',
+//   to: '+16268249559'
+// })
+// .then(message =>  console.log(message.status))
+// .done();
 //});
 
-//cron.schedule("* * * * * *", function(){
-  // customerModel.find().then((customers) => {
-  //   customers.forEach((customer) => {
-  //     let tempNumber = customer.phoneNumber;
-  //     var message = client.messages.create({
-  //         body: 'Who do you think is a better DM? Tyler or Javi?',
-  //         from: '+12028311646',
-  //         to: tempNumber
-  //       })
-  //       .then(message =>  console.log(message.status))
-  //       .done();
-  //   });
-  // });
+//Send SMS to everyone in the database
+//cron.schedule('* * * * *', function() {
+customerModel.find().then(customers => {
+    customers.forEach(customer => {
+        let tempID = customer._id;
+        let tempNumber = customer.phoneNumber;
+        let tempCredits = customer.credits;
+        console.log(tempNumber);
+        console.log(tempID);
+        console.log(tempCredits);
+
+        tempCustomer = customerModel.find({ _id: tempID });
+
+        customerModel
+            .findByIdAndUpdate(tempCustomer, {
+                $inc: { 'tempCustomer.credits': -1 }
+            })
+            .exec(console.log('updated'));
+    });
+});
+
+// customerModel.find().then(customers => {
+//   customers.forEach(customer => {
+//       let tempCredits = customer.credits;
+//       console.log();
+//       console.log();
+//       console.log(tempCredits);
+//   });
+// });
+
 //});
+
+// var message = client.messages.create({
+//     body: 'Who do you think is a better DM? Tyler or Javi?',
+//     from: '+12028311646',
+//     to: tempNumber
+//   })
+//   .then(message =>  console.log(message.status))
+//   .done();
