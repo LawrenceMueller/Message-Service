@@ -37,6 +37,9 @@ const onToken = (description, amount, phone, credits) => token => {
         case "failure":
             alert("Something went wrong on our side, try agian later.");
           break;
+        case "Forgot Country Code":
+            alert("You forgot the country code, try again");
+            break;
         default:
           alert("Success");
       }

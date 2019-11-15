@@ -11,7 +11,7 @@ dotenv.config();
 
 // Create the constants needed for the application
 const URI = process.env.DB_CONNECTION_STRING;
-const accountSid = process.env.AC54c76e0450a1ff833e7d94dda6b42800;
+const accountSid = process.env.TWILIO_SID;
 const authToken = process.env.TWILIO_AUTH;
 const client = require('twilio')(accountSid, authToken);
 const customerModel = require('./models/customer');
