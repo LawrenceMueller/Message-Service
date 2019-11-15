@@ -4,6 +4,7 @@ import Checkout from '../checkout/checkout';
 import TOS from '../TOS/TOS';
 import PP from '../PP/PP';
 import HIW from '../HowItWorks/howItWorks';
+import 'react-phone-number-input/style.css'
 
 export default class SignUp extends Component {
     constructor(props) {
