@@ -3,7 +3,7 @@ const cors = require('cors');
 const express = require('express');
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
-const cron = require('cron');
+const cron = require('node-cron');
 const twilio = require('twilio');
 
 // Configure dotenv for security purposes
@@ -11,9 +11,8 @@ dotenv.config();
 
 // Create the constants needed for the application
 const URI = process.env.DB_CONNECTION_STRING;
-const CronJob = require('cron').CronJob;
-const accountSid = 'AC54c76e0450a1ff833e7d94dda6b42800';
-const authToken = '2de7cdc43f4f3e0cfd87f49b377366a3';
+const accountSid = process.env.AC54c76e0450a1ff833e7d94dda6b42800;
+const authToken = process.env.TWILIO_AUTH;
 const client = require('twilio')(accountSid, authToken);
 const customerModel = require('./models/customer');
 const app = express();
@@ -43,21 +42,28 @@ app.listen(8080, () =>
     console.log('Listening on port 8080, web server establishd.')
 );
 
-// new CronJob('* * * * *', function() {
-//     //Perform a basic SMS message send
-//     client.messages
-//         .create({
-//             body:
-//                 'This is the ship that made the Kessel Run in fourteen parsecs?',
-//             from: '+12028311646',
-//             to: '+16266786830'
-//         })
-//         .then(message => console.log(message.sid));
-// });
+//Perform a basic SMS message send
+//cron.schedule("* * * * * *", function(){
+    // var message = client.messages.create({
+    //   body: 'Who do you think is a better DM? Tyler or Javi?',
+    //   from: '+12028311646',
+    //   to: '+16268249559'
+    // })
+    // .then(message =>  console.log(message.status))
+    // .done();
+//});
 
-// customerModel.find().then((customers) => {
-//   customers.forEach((customer) => {
-//     let tempNumber = customer.phoneNumber;
-//     numbersToMessage.push(tempNumber);
-//   });
-// });
+//cron.schedule("* * * * * *", function(){
+  // customerModel.find().then((customers) => {
+  //   customers.forEach((customer) => {
+  //     let tempNumber = customer.phoneNumber;
+  //     var message = client.messages.create({
+  //         body: 'Who do you think is a better DM? Tyler or Javi?',
+  //         from: '+12028311646',
+  //         to: tempNumber
+  //       })
+  //       .then(message =>  console.log(message.status))
+  //       .done();
+  //   });
+  // });
+//});
