@@ -27,8 +27,9 @@ mongoose.connect(URI, { useUnifiedTopology: true, useNewUrlParser: true }).then(
     }
 );
 
-// This line just fixes a mongoose deprecation warning
+// These lines just fix some mongoose deprecation warnings
 mongoose.set('useCreateIndex', true);
+mongoose.set('useFindAndModify', false);
 
 // Define middleware
 app.use(express.json());
@@ -56,39 +57,32 @@ app.listen(8080, () =>
 //Send SMS to everyone in the database
 //cron.schedule('* * * * *', function() {
 customerModel.find().then(customers => {
+    // Query for all customers
     customers.forEach(customer => {
-        let tempID = customer._id;
-        let tempNumber = customer.phoneNumber;
-        let tempCredits = customer.credits;
-        console.log(tempNumber);
-        console.log(tempID);
-        console.log(tempCredits);
+        // Iterate on every customer
+        // Find the customer again using findByID. It is redundant but this is the only way it works
+        customerModel.findById(customer._id, function(err, doc) {
+            if (err) {
+                console.log('error: ' + err);
+            }
+            if (doc.credits === 0) {
+                // Delete customer if their credits have expired
+                customerModel.findByIdAndRemove(doc._id).exec();
+            } else {
+                // Send the customer a message
+                var message = client.messages
+                    .create({
+                        body: 'Who do you think is a better DM? Tyler or Javi?',
+                        from: process.env.TWILIO_NUM,
+                        to: customer.phoneNumber
+                    })
+                    .then(message => console.log(message.status))
+                    .done();
 
-        tempCustomer = customerModel.find({ _id: tempID });
-
-        customerModel
-            .findByIdAndUpdate(tempCustomer, {
-                $inc: { 'tempCustomer.credits': -1 }
-            })
-            .exec(console.log('updated'));
+                doc.credits = doc.credits - 1; // Update customer credits to reflect newest sent message
+                doc.save(); // Update customer
+            }
+        });
     });
 });
-
-// customerModel.find().then(customers => {
-//   customers.forEach(customer => {
-//       let tempCredits = customer.credits;
-//       console.log();
-//       console.log();
-//       console.log(tempCredits);
-//   });
-// });
-
 //});
-
-// var message = client.messages.create({
-//     body: 'Who do you think is a better DM? Tyler or Javi?',
-//     from: '+12028311646',
-//     to: tempNumber
-//   })
-//   .then(message =>  console.log(message.status))
-//   .done();
