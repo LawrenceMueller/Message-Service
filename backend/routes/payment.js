@@ -22,25 +22,13 @@ router.post('/', async (req, res) => {
         const { amount, token, description, credits } = req.body;
         let phoneNumber = req.body.phoneNumber;
 
-        console.log('from frontend: ' + phoneNumber);
-        console.log(phoneNumber.charAt(0));
-
         if (phoneNumber.charAt(0) == '+' && credits !== 0) {
             phoneNumber = PhoneNumber(phoneNumber); // Create PhoneNumber Object using thrid party, for validation purposes
-            console.log(
-                'turned into object: ' +
-                    phoneNumber +
-                    ' whos number is : ' +
-                    phoneNumber.getNumber()
-            );
-
-            console.log(phoneNumber.isValid());
 
             if (phoneNumber.isValid()) {
                 // Convert validated phone into string
                 phoneNumber = Phone(phoneNumber.getNumber());
                 phoneNumber = phoneNumber[0];
-                console.log('turned back into string: ' + phoneNumber);
 
                 // Create a Stripe customer because we need a customer id for charge
                 const customer = await stripe.customers.create({
@@ -49,7 +37,6 @@ router.post('/', async (req, res) => {
                 });
 
                 //do database stuff
-                console.log('phone ' + phoneNumber);
                 const newCustomer = new customerModel({
                     cEmail: token.email,
                     phoneNumber: phoneNumber,

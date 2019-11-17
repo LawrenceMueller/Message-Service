@@ -4,7 +4,7 @@ import StripeCheckout from "react-stripe-checkout";
 import STRIPE_PUBLISHABLE from "../../constants/stripe";
 import PAYMENT_SERVER_URL from "../../constants/server";
 
-const onToken = (description, amount, phone, credits) => token => {
+const onToken = (description, amount, phone, credits, notifier) => token => {
 
   const body = {
     amount: amount,
@@ -13,12 +13,6 @@ const onToken = (description, amount, phone, credits) => token => {
     description: description,
     credits: credits
   };
-
-  console.log("amount: " + amount);
-  console.log("phone: " + phone);
-  console.log("phone-type: " + typeof(phone));
-  console.log("description: " + description);
-  console.log("credits: " + credits);
 
   axios
     .post(PAYMENT_SERVER_URL, body)
@@ -42,7 +36,7 @@ const onToken = (description, amount, phone, credits) => token => {
             alert("You forgot the country code, try again");
             break;
         default:
-          alert("Success");
+            notifier(6);
       }
     })
     .catch(error => {
@@ -56,7 +50,7 @@ const Checkout = (props) => (
     name={props.name}
     description={props.description}
     amount={props.amount}
-    token={onToken(props.description, props.amount, props.phone, props.credits)}
+    token={onToken(props.description, props.amount, props.phone, props.credits, props.notifier)}
     stripeKey={STRIPE_PUBLISHABLE}
   />
 );
