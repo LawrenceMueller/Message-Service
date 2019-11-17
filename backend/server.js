@@ -45,93 +45,59 @@ app.listen(8080, () =>
     console.log('Listening on port 8080, web server establishd.')
 );
 
+
+
 //Send SMS to everyone in the database
-cron.schedule('* * * * * *', function() {
+cron.schedule('* 14 * * * ', function() {
     let currentTextLocation = 0;
     let currentTextBody = '';
 
-    textLocationModel.findById(process.env.TEXTLOCATION_ID, function(err, doc){
-      if (err) {
-          console.log('error: ' + err);
-      }
-      currentTextLocation = doc.currentTextNumber;
-
-      textModel.find({text_ID: currentTextLocation}, function(err, doc){
-        if(err){
-          console.log('error: ' + err);
+    // Query for the id of the text that we will send
+    textLocationModel.findById(process.env.TEXTLOCATION_ID, function(err, doc) {
+        if (err) {
+            console.log('error: ' + err);
         }
-        console.log(doc);
-        console.log(doc.body);
-        currentTextBody = doc.body;
-      });
+        currentTextLocation = doc.currentTextNumber; // Store ID of the text that we need to find
+        doc.currentTextNumber = currentTextLocation + 1; // Increment doc so next time we will get the next text
+        doc.save();
+
+        // Query for the text we will send out to the users using the ID we found
+        textModel.find({ text_ID: currentTextLocation }, function(err, doc) {
+            if (err) {
+                console.log('error: ' + err);
+            }
+            currentTextBody = doc[0]['body']; // No Idea why I have to access the text this way but it works
+
+            // Query for all customers
+            customerModel.find().then(customers => {
+                // Iterate on every customer to send out each text
+                customers.forEach(customer => {
+                    // Find each customer again using findByID. It is redundant but this is the only way it works
+                    customerModel.findById(customer._id, function(err, doc) {
+                        if (err) {
+                            console.log('error: ' + err);
+                        }
+                        // Delete customer if their credits have expired
+                        if (doc.credits === 0) {
+                            customerModel.findByIdAndRemove(doc._id).exec();
+                        } else {
+                            // Send the customer a message
+                            console.log();
+                            var message = client.messages
+                                .create({
+                                    body: currentTextBody,
+                                    from: process.env.TWILIO_NUM,
+                                    to: customer.phoneNumber
+                                })
+                                .then(message => console.log(message.status))
+                                .done();
+
+                            doc.credits = doc.credits - 1; // Update customer credits to reflect newest sent message
+                            doc.save(); // Update customer
+                        }
+                    });
+                });
+            });
+        });
     });
-
-    
-
-      customerModel.find().then(customers => {
-      // Query for all customers
-      customers.forEach(customer => {
-          // Iterate on every customer
-          // Find the customer again using findByID. It is redundant but this is the only way it works
-          customerModel.findById(customer._id, function(err, doc) {
-              if (err) {
-                  console.log('error: ' + err);
-              }
-              if (doc.credits === 0) {
-                  // Delete customer if their credits have expired
-                  customerModel.findByIdAndRemove(doc._id).exec();
-              } else {
-                  // Send the customer a message
-                  // console.log('from: ' + process.env.TWILIO_NUM + "   to: " + customer.phoneNumber + '   body: ' + currentTextBody);
-                  // console.log();
-                  // var message = client.messages
-                  //     .create({
-                  //         body: currentTextBody,
-                  //         from: process.env.TWILIO_NUM,
-                  //         to: customer.phoneNumber
-                  //     })
-                  //     .then(message => console.log(message.status))
-                  //     .done();
-
-                  doc.credits = doc.credits - 1; // Update customer credits to reflect newest sent message
-                  doc.save(); // Update customer
-              }
-          });
-      });
-  });
 });
-
-
-
-//Send SMS to everyone in the database
-//cron.schedule('0 2 * * *', function() {
-// customerModel.find().then(customers => {
-//     // Query for all customers
-//     customers.forEach(customer => {
-//         // Iterate on every customer
-//         // Find the customer again using findByID. It is redundant but this is the only way it works
-//         customerModel.findById(customer._id, function(err, doc) {
-//             if (err) {
-//                 console.log('error: ' + err);
-//             }
-//             if (doc.credits === 0) {
-//                 // Delete customer if their credits have expired
-//                 customerModel.findByIdAndRemove(doc._id).exec();
-//             } else {
-//                 // Send the customer a message
-//                 var message = client.messages
-//                     .create({
-//                         body: 'Who do you think is a better DM? Tyler or Javi?',
-//                         from: process.env.TWILIO_NUM,
-//                         to: customer.phoneNumber
-//                     })
-//                     .then(message => console.log(message.status))
-//                     .done();
-
-//                 doc.credits = doc.credits - 1; // Update customer credits to reflect newest sent message
-//                 doc.save(); // Update customer
-//             }
-//         });
-//     });
-// });
-//});
