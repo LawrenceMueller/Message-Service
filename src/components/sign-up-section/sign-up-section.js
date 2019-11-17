@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import './sign-up-section_styles.css';
+
 import Checkout from '../checkout/checkout';
 import TOS from '../TOS/TOS';
 import PP from '../PP/PP';
 import HIW from '../HowItWorks/howItWorks';
-import 'react-phone-number-input/style.css'
+
+import PhoneInput from 'react-phone-input-2';
+import 'react-phone-input-2/dist/style.css';
 
 export default class SignUp extends Component {
     constructor(props) {
@@ -28,10 +31,8 @@ export default class SignUp extends Component {
         });
     }
 
-    phoneChange(event) {
-        this.setState({
-            phoneNumber: event.target.value
-        });
+    phoneChange(value) {
+        this.setState({ phoneNumber: value })
     }
 
     handleTOS(){
@@ -81,14 +82,11 @@ export default class SignUp extends Component {
                         </select>
                     </div>
                     <div className="group">
-                        <label>Phone (with country code)</label>
-                        <input
-                            className="google_input"
-                            type="text"
+                        <label id="phone-label">Phone (with country code)</label>
+                        <PhoneInput 
+                            defaultCountry={'us'}
                             value={this.state.phoneNumber}
-                            onChange={this.phoneChange}
-                            placeholder="+1444-444-4444"
-                            id="phone"
+                            onChange={this.phoneChange} 
                         />
                         <label id="terms">
                             By clicking "pay with card" you agree to the{' '}

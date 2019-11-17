@@ -9,6 +9,14 @@
     border-radius: 25px;
 }
 
+.react-tel-input{
+    align-content: center;
+}
+
+#phone-form-control{
+    width: 100%;
+}
+
 .google_input {
     padding: 0.5rem 1rem;
     font-size: 1.2rem;
@@ -27,6 +35,7 @@
     display: block;
     margin-top: 20px;
 }
+
 label {
     width: fit-content;
     margin: 0.5rem;
@@ -112,4 +121,8 @@ select {
     margin-left: 10px;
     color: white;
 }
+}
+
+#phone-label{
+    margin-bottom: 5px;
 }

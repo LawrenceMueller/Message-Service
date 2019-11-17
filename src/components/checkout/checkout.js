@@ -16,6 +16,7 @@ const onToken = (description, amount, phone, credits) => token => {
 
   console.log("amount: " + amount);
   console.log("phone: " + phone);
+  console.log("phone-type: " + typeof(phone));
   console.log("description: " + description);
   console.log("credits: " + credits);
 
