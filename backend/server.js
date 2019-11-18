@@ -48,7 +48,7 @@ app.listen(8080, () =>
 
 
 //Send SMS to everyone in the database
-cron.schedule('* 11 * * * ', function() {
+cron.schedule('* 14 * * * ', function() {
     let currentTextLocation = 0;
     let currentTextBody = '';
 
