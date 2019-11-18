@@ -21,19 +21,19 @@ const onToken = (description, amount, phone, credits, notifier) => token => {
       
       switch(response.data.error){
         case "phone is invalid":
-          alert("phone is invalid");
+            notifier(1);
           break;
         case "Number of days must not be 0":
-            alert("Number of days must not be 0");
+            notifier(2);
           break;
         case "Something went wrong":
-            alert("Something went wrong, try again!");
+            notifier(3);
           break;
         case "failure":
-            alert("Something went wrong on our side, try agian later.");
+            notifier(4);
           break;
         case "Forgot Country Code":
-            alert("You forgot the country code, try again");
+            notifier(5);
             break;
         default:
             notifier(6);

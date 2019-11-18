@@ -20,17 +20,18 @@ export default class SignUp extends Component {
             phoneNumber: '',
             tosPage: false,
             ppPage: false,
-            codeFromTransaction: 0
+            codeFromTransaction: 9
         };
 
         this.monthsChange = this.monthsChange.bind(this);
         this.phoneChange = this.phoneChange.bind(this);
         this.handlePP = this.handlePP.bind(this);
         this.handleTOS = this.handleTOS.bind(this);
-        this.notify = this.notify.bind(this);
         this.changeResponseCode = this.changeResponseCode.bind(this);
 
-        toast.configure();
+        toast.configure({
+            autoClose: 8000
+        });
     }
 
     monthsChange(event) {
@@ -61,7 +62,7 @@ export default class SignUp extends Component {
         })
     }
 
-    notify() {
+    componentDidUpdate(){
         switch (this.state.codeFromTransaction) {
             case 1:
                 this.changeResponseCode(0);
@@ -88,13 +89,16 @@ export default class SignUp extends Component {
                 return toast.warn(
                     'We missed your country code. You were not charged, please try again.'
                 );
-            default:
+            case 6:
                 this.changeResponseCode(0);
                 return toast.success(
                     'You are signed up! An email reciept should be sent to you within 24 hours. You should start to receive messages within 48 hours'
                 );
+            default:
+                console.log("");
         }
     }
+
     render() {
         if (this.state.tosPage === true) {
             return <TOS backFromTOS={this.handleTOS} />;
@@ -104,9 +108,6 @@ export default class SignUp extends Component {
         }
         return (
             <div>
-                {this.state.codeFromTransaction !== 0
-                    ? this.notify()
-                    : console.log('')}
                 <HIW />
                 <div className="container">
                     <div className="group">
