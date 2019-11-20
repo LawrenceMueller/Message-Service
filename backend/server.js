@@ -4,6 +4,7 @@ const express = require('express');
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 const cron = require('node-cron');
+const fs = require('fs');
 
 // Configure dotenv for security purposes
 dotenv.config();
@@ -94,11 +95,26 @@ cron.schedule('1 14 * * * ', function() {
                                                 .findByIdAndRemove(doc._id)
                                                 .exec();
                                         } else {
-                                            console.log(
+                                            let currentError =
                                                 'twilio error code: ' +
-                                                    e.code +
-                                                    ' for number: ' +
-                                                    customer.phoneNumber
+                                                e.code +
+                                                ' for number: ' +
+                                                customer.phoneNumber +
+                                                '\n';
+                                            fs.writeFile(
+                                                'errorLog.txt',
+                                                currentError,
+                                                err => {
+                                                    if (err) {
+                                                        console.log(
+                                                            'error: ' + err
+                                                        );
+                                                    } else {
+                                                        console.log(
+                                                            'Wrote error to file'
+                                                        );
+                                                    }
+                                                }
                                             );
                                         }
                                     })
@@ -107,7 +123,7 @@ cron.schedule('1 14 * * * ', function() {
                                 console.log('error: ' + err);
                             }
                             doc.credits = doc.credits - 1; // Update customer credits to reflect newest sent message
-                            doc.lastMessaged = new Date();  // Update the last time they were messaged
+                            doc.lastMessaged = new Date(); // Update the last time they were messaged
                             doc.save(); // Update customer
                         }
                     });
@@ -117,7 +133,7 @@ cron.schedule('1 14 * * * ', function() {
     });
 });
 
-cron.schedule('14 16 * * * ', function() {
+cron.schedule('1 15 * * * ', function() {
     let currentTextLocation = 0;
     let currentTextBody = '';
 
@@ -154,7 +170,7 @@ cron.schedule('14 16 * * * ', function() {
                                 var message = client.messages
                                     .create({
                                         body: currentTextBody,
-                                        from: process.env.TWILIO_NUM,
+                                        from: '+16266786830',
                                         to: customer.phoneNumber
                                     })
                                     .then(message =>
@@ -166,11 +182,26 @@ cron.schedule('14 16 * * * ', function() {
                                                 .findByIdAndRemove(doc._id)
                                                 .exec();
                                         } else {
-                                            console.log(
+                                            let currentError =
                                                 'twilio error code: ' +
-                                                    e.code +
-                                                    ' for number: ' +
-                                                    customer.phoneNumber
+                                                e.code +
+                                                ' for number: ' +
+                                                customer.phoneNumber +
+                                                '\n';
+                                            fs.writeFile(
+                                                'errorLog.txt',
+                                                currentError,
+                                                err => {
+                                                    if (err) {
+                                                        console.log(
+                                                            'error: ' + err
+                                                        );
+                                                    } else {
+                                                        console.log(
+                                                            'Wrote error to file'
+                                                        );
+                                                    }
+                                                }
                                             );
                                         }
                                     })
@@ -179,10 +210,14 @@ cron.schedule('14 16 * * * ', function() {
                                 console.log('error: ' + err);
                             }
                             doc.credits = doc.credits - 1; // Update customer credits to reflect newest sent message
-                            doc.lastMessaged = new Date();  // Update the last time they were messaged
+                            doc.lastMessaged = new Date(); // Update the last time they were messaged
                             doc.save(); // Update customer
                         } else {
-                            console.log(doc.lastMessaged.getDate() + ' : ' + doc.lastMessaged.getMinutes());
+                            console.log(
+                                doc.lastMessaged.getDate() +
+                                    ' : ' +
+                                    doc.lastMessaged.getMinutes()
+                            );
                         }
                     });
                 });
