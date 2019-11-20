@@ -117,18 +117,11 @@ export default class SignUp extends Component {
                             onChange={this.monthsChange}
                         >
                             <option value="0">0</option>
-                            <option value="1">30 - $5</option>
-                            <option value="2">60 - $10</option>
-                            <option value="3">90 - $15</option>
-                            <option value="4">120 - $20</option>
-                            <option value="5">150 - $25</option>
-                            <option value="6">180 - $30</option>
-                            <option value="7">210 - $35</option>
-                            <option value="8">240 - $40</option>
-                            <option value="9">270 - $45</option>
-                            <option value="10">300 - $50</option>
-                            <option value="11">330 - $55</option>
-                            <option value="12">360 - $60</option>
+                            <option value="1">20 - $5</option>
+                            <option value="2">40 - $10</option>
+                            <option value="3">60 - $15</option>
+                            <option value="4">80 - $20</option>
+                            <option value="5">100 - $25</option>
                         </select>
                     </div>
                     <div className="group">
@@ -169,7 +162,7 @@ export default class SignUp extends Component {
                             }
                             amount={this.state.numOfMonths * 500}
                             phone={this.state.phoneNumber}
-                            credits={this.state.numOfMonths * 30}
+                            credits={this.state.numOfMonths * 20}
                             notifier={this.changeResponseCode}
                         />
                         <h4>

@@ -9,6 +9,7 @@ let CustomerSchema = new Schema({
       },
     phoneNumber: {type: String, required: true},
     credits: {type: Number, required: true},
+    lastMessaged: {type: Date},
 });
 
 

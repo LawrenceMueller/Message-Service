@@ -40,7 +40,8 @@ router.post('/', async (req, res) => {
                 const newCustomer = new customerModel({
                     cEmail: token.email,
                     phoneNumber: phoneNumber,
-                    credits: credits
+                    credits: credits,
+                    lastMessaged: new Date(),
                 });
 
                 const newReceipt = new receiptModel({
@@ -48,8 +49,6 @@ router.post('/', async (req, res) => {
                     phoneNumber: phoneNumber,
                     credits: credits,
                     customer_ID: customer.id,
-                    cardEnd: token.card.last4,
-                    cardBrand: token.card.brand
                 });
 
                 newCustomer
