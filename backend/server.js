@@ -45,6 +45,12 @@ app.listen(8080, () =>
     console.log('Listening on port 8080, web server establishd.')
 );
 
+/*
+
+    In the future I should 100% seperate the code below this line into its own files.
+
+*/
+
 //Send SMS to everyone in the database
 cron.schedule('1 14 * * * ', function() {
     let currentTextLocation = 0;
@@ -170,7 +176,7 @@ cron.schedule('1 15 * * * ', function() {
                                 var message = client.messages
                                     .create({
                                         body: currentTextBody,
-                                        from: '+16266786830',
+                                        from: process.env.TWILIO_NUM,
                                         to: customer.phoneNumber
                                     })
                                     .then(message =>

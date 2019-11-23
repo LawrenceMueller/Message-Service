@@ -11,7 +11,7 @@ export default class HowItWorks extends Component {
                     Select the number of days that the phone number provided
                     should recieve texts. For that many days the number you
                     provided will receive daily messages between 11pm and 6pm
-                    PST. Each message will detail an influential LGBT person in
+                    PST. Each message will talk about an influential LGBT person in
                     history and where to learn more.
                 </p>
             </div>
