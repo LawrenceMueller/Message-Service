@@ -5,6 +5,7 @@ const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 const cron = require('node-cron');
 const fs = require('fs');
+const path = require('path');
 
 // Configure dotenv for security purposes
 dotenv.config();
@@ -17,6 +18,7 @@ const client = require('twilio')(accountSid, authToken);
 const customerModel = require('./models/customer');
 const textLocationModel = require('./models/textLocation');
 const textModel = require('./models/text');
+const PORT = process.env.PORT || 8080;
 const app = express();
 
 // Connect to the database
@@ -41,9 +43,17 @@ const paymentRouter = require('./routes/payment');
 app.use('/payment', paymentRouter);
 
 // Start the Web Server
-app.listen(8080, () =>
+app.listen(PORT, () =>
     console.log('Listening on port 8080, web server establishd.')
 );
+
+if(process.env.NODE_ENV === 'production'){
+    app.use(express.static('client/build/'));
+
+    app.get('*', (req, res) => {
+        res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+    });
+}
 
 /*
 
