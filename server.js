@@ -10,7 +10,7 @@ const fs = require('fs');
 dotenv.config();
 
 // Create the constants needed for the application
-const URI = process.env.DB_CONNECTION_STRING;
+const URI = process.env.MONGODB_URI;
 const accountSid = process.env.TWILIO_SID;
 const authToken = process.env.TWILIO_AUTH;
 const client = require('twilio')(accountSid, authToken);
@@ -20,7 +20,7 @@ const textModel = require('./models/text');
 const app = express();
 
 // Connect to the database
-mongoose.connect(URI, { useUnifiedTopology: true, useNewUrlParser: true }).then(
+mongoose.connect(URI, { useNewUrlParser: true, useUnifiedTopology: true }).then(
     () => {
         console.log('Database connection established!');
     },
