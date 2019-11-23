@@ -1,7 +1,7 @@
 node_modules
 build
 npm-debug.log
-.txt
 .env
 .DS_Store
 constants
+errorsLog.txt

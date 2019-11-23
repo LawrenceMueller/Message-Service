@@ -108,7 +108,7 @@ cron.schedule('1 14 * * * ', function() {
                                                 customer.phoneNumber +
                                                 '\n';
                                             fs.writeFile(
-                                                'errorLog.txt',
+                                                'errorsLog.txt',
                                                 currentError,
                                                 err => {
                                                     if (err) {
@@ -195,7 +195,7 @@ cron.schedule('1 15 * * * ', function() {
                                                 customer.phoneNumber +
                                                 '\n';
                                             fs.writeFile(
-                                                'errorLog.txt',
+                                                'errorsLog.txt',
                                                 currentError,
                                                 err => {
                                                     if (err) {
