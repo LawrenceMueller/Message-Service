@@ -9,14 +9,20 @@
     color: white;
 }
 
-.how-it-works-container > h3 {
+.how-it-works-content{
+    width: 75%;
+    text-align: center;
+}
+
+.how-it-works-content > h3 {
     margin: 0;
     padding: 0;
     padding-top: 10px;
 } 
 
-.how-it-works-container > p {
+.how-it-works-content > p {
     color: white;
     margin: 0;
     padding: 5px 5px 10px 10px;
+    text-align: left;
 }

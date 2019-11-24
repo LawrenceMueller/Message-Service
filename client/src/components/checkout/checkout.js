@@ -13,7 +13,7 @@ const onToken = (description, amount, phone, credits, notifier) => token => {
   };
 
   axios
-    .post('http://lbgtthroughhistory.com/payment', body)
+    .post('https://lgbtthroughhistory.com/payment', body)
     .then(response => {
       console.log(response.data);
       
