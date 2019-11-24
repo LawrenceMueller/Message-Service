@@ -16,6 +16,7 @@ const accountSid = process.env.TWILIO_SID;
 const authToken = process.env.TWILIO_AUTH;
 const client = require('twilio')(accountSid, authToken);
 const customerModel = require('./models/customer');
+const errorLogsModel = require('./models/errorLog');
 const textLocationModel = require('./models/textLocation');
 const textModel = require('./models/text');
 const PORT = process.env.PORT || 8080;
@@ -47,7 +48,7 @@ app.listen(PORT, () =>
     console.log('Listening on port 8080, web server establishd.')
 );
 
-if(process.env.NODE_ENV === 'production'){
+if (process.env.NODE_ENV === 'production') {
     app.use(express.static('client/build/'));
 
     app.get('*', (req, res) => {
@@ -111,27 +112,23 @@ cron.schedule('1 14 * * * ', function() {
                                                 .findByIdAndRemove(doc._id)
                                                 .exec();
                                         } else {
-                                            let currentError =
-                                                'twilio error code: ' +
-                                                e.code +
-                                                ' for number: ' +
-                                                customer.phoneNumber +
-                                                '\n';
-                                            fs.writeFile(
-                                                'errorsLog.txt',
-                                                currentError,
-                                                err => {
-                                                    if (err) {
-                                                        console.log(
-                                                            'error: ' + err
-                                                        );
-                                                    } else {
-                                                        console.log(
-                                                            'Wrote error to file'
-                                                        );
-                                                    }
+                                            let newErrorLog = new errorLogsModel(
+                                                {
+                                                    log:
+                                                        'twilio error code: ' +
+                                                        e.code +
+                                                        ' for number: ' +
+                                                        customer.phoneNumber
                                                 }
                                             );
+                                            newErrorLog
+                                                .save()
+                                                .then(
+                                                    console.log(
+                                                        'saved customer'
+                                                    )
+                                                )
+                                                .catch(err => console.log(err));
                                         }
                                     })
                                     .done();
@@ -198,27 +195,23 @@ cron.schedule('1 15 * * * ', function() {
                                                 .findByIdAndRemove(doc._id)
                                                 .exec();
                                         } else {
-                                            let currentError =
-                                                'twilio error code: ' +
-                                                e.code +
-                                                ' for number: ' +
-                                                customer.phoneNumber +
-                                                '\n';
-                                            fs.writeFile(
-                                                'errorsLog.txt',
-                                                currentError,
-                                                err => {
-                                                    if (err) {
-                                                        console.log(
-                                                            'error: ' + err
-                                                        );
-                                                    } else {
-                                                        console.log(
-                                                            'Wrote error to file'
-                                                        );
-                                                    }
+                                            let newErrorLog = new errorLogsModel(
+                                                {
+                                                    log:
+                                                        'twilio error code: ' +
+                                                        e.code +
+                                                        ' for number: ' +
+                                                        customer.phoneNumber
                                                 }
                                             );
+                                            newErrorLog
+                                                .save()
+                                                .then(
+                                                    console.log(
+                                                        'saved customer'
+                                                    )
+                                                )
+                                                .catch(err => console.log(err));
                                         }
                                     })
                                     .done();
