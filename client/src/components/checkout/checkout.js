@@ -1,8 +1,6 @@
 import React from "react";
 import axios from "axios";
 import StripeCheckout from "react-stripe-checkout";
-import STRIPE_PUBLISHABLE from "../../constants/stripe";
-import PAYMENT_SERVER_URL from "../../constants/server";
 
 const onToken = (description, amount, phone, credits, notifier) => token => {
 
@@ -15,7 +13,7 @@ const onToken = (description, amount, phone, credits, notifier) => token => {
   };
 
   axios
-    .post(PAYMENT_SERVER_URL, body)
+    .post('http://lbgtthroughhistory.com/payment', body)
     .then(response => {
       console.log(response.data);
       
@@ -51,7 +49,7 @@ const Checkout = (props) => (
     description={props.description}
     amount={props.amount}
     token={onToken(props.description, props.amount, props.phone, props.credits, props.notifier)}
-    stripeKey={STRIPE_PUBLISHABLE}
+    stripeKey={'pk_live_B3HslsZTHckbrdBjsYsQ6CrV00cSNBjROa'}
   />
 );
 

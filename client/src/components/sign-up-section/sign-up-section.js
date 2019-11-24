@@ -56,13 +56,13 @@ export default class SignUp extends Component {
         });
     }
 
-    changeResponseCode(value){
+    changeResponseCode(value) {
         this.setState({
             codeFromTransaction: value
-        })
+        });
     }
 
-    componentDidUpdate(){
+    componentDidUpdate() {
         switch (this.state.codeFromTransaction) {
             case 1:
                 this.changeResponseCode(0);
@@ -95,7 +95,7 @@ export default class SignUp extends Component {
                     'You are signed up! An email reciept should be sent to you within 24 hours. You should start to receive messages within 48 hours'
                 );
             default:
-                console.log("");
+                console.log('');
         }
     }
 
@@ -157,8 +157,8 @@ export default class SignUp extends Component {
                             name={'LGBT Through History'}
                             description={
                                 'Daily Messages from LGBT Through History for ' +
-                                this.state.numOfMonths * 30 +
-                                ' days'
+                                this.state.numOfMonths * 20 +
+                                ' days. If you need any support or encounter technical issues please contact lgbtthroughhsitory@gmail.com'
                             }
                             amount={this.state.numOfMonths * 500}
                             phone={this.state.phoneNumber}

@@ -11,7 +11,6 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 // Import models for DB stuff
 const customerModel = require('../models/customer');
 const receiptModel = require('../models/receipt');
-const textModel = require('../models/text');
 
 // Define the post request from the web app
 router.post('/', async (req, res) => {
