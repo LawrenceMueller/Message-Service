@@ -2,6 +2,14 @@ import React, { Component } from 'react';
 import './howItWorks_styles.css';
 
 export default class HowItWorks extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            tosPage: false,
+            ppPage: false,
+        };
+    }
+
     render() {
         return (
             <div className="how-it-works-container">
@@ -11,7 +19,7 @@ export default class HowItWorks extends Component {
                         Simply sign yourself up or surprise a friend with a gift.
                         Select the number of days that the phone number provided
                         should recieve texts. For that many days the number you
-                        provided will receive daily messages between 11pm and 6pm
+                        provided will receive daily messages between 12pm and 5pm
                         PST. Each message will talk about an influential LGBT person in
                         history and where to learn more.
                     </p>

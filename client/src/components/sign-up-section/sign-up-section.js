@@ -121,7 +121,6 @@ export default class SignUp extends Component {
                             <option value="2">40 - $10</option>
                             <option value="3">60 - $15</option>
                             <option value="4">80 - $20</option>
-                            <option value="5">100 - $25</option>
                         </select>
                     </div>
                     <div className="group">
@@ -136,9 +135,9 @@ export default class SignUp extends Component {
                         <label id="terms">
                             By clicking "pay with card" you agree to the{' '}
                             <span onClick={this.handleTOS}>
-                                Terms of Service,
+                                Terms of Service, 
                             </span>
-                            <span onClick={this.handlePP}>Privacy Policy,</span>{' '}
+                            <span onClick={this.handlePP}> Privacy Policy,</span>{' '}
                             and that all payment transactions will be handled
                             through{' '}
                             <span>
