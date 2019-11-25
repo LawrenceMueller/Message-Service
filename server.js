@@ -63,7 +63,7 @@ if (process.env.NODE_ENV === 'production') {
 */
 
 //Send SMS to everyone in the database
-cron.schedule('6 17 * * * ', function() {
+cron.schedule('12 17 * * * ', function() {
     let currentTextLocation = 0;
     let currentTextBody = '';
 
