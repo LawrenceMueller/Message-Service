@@ -63,7 +63,7 @@ if (process.env.NODE_ENV === 'production') {
 */
 
 //Send SMS to everyone in the database
-cron.schedule('15 14 * * * ', function() {
+cron.schedule('21 11 * * * ', function() {
     let currentTextLocation = 0;
     let currentTextBody = '';
 
@@ -100,7 +100,7 @@ cron.schedule('15 14 * * * ', function() {
                                 var message = client.messages
                                     .create({
                                         body: currentTextBody,
-                                        from: process.env.TWILIO_NUM,
+                                        from: 'LGBT Through History',
                                         to: customer.phoneNumber
                                     })
                                     .then(message =>
