@@ -100,7 +100,7 @@ cron.schedule('33 11 * * * ', function() {
                                 var message = client.messages
                                     .create({
                                         body: currentTextBody,
-                                        from: 'LGBThist',
+                                        from: process.env.TWILIO_NUM,
                                         to: customer.phoneNumber
                                     })
                                     .then(message =>
