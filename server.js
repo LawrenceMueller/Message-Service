@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const cron = require('node-cron');
 const fs = require('fs');
 const path = require('path');
+const Nexmo = require('nexmo');
 
 // Configure dotenv for security purposes
 dotenv.config();
@@ -63,7 +64,7 @@ if (process.env.NODE_ENV === 'production') {
 */
 
 //Send SMS to everyone in the database
-cron.schedule('33 11 * * * ', function() {
+cron.schedule('55 14 * * * ', function() {
     let currentTextLocation = 0;
     let currentTextBody = '';
 
@@ -100,7 +101,7 @@ cron.schedule('33 11 * * * ', function() {
                                 var message = client.messages
                                     .create({
                                         body: currentTextBody,
-                                        from: process.env.TWILIO_NUM,
+                                        from: process.env.TWILIO_NUM_TOLL_FREE,
                                         to: customer.phoneNumber
                                     })
                                     .then(message =>
@@ -183,7 +184,7 @@ cron.schedule('1 15 * * * ', function() {
                                 var message = client.messages
                                     .create({
                                         body: currentTextBody,
-                                        from: process.env.TWILIO_NUM,
+                                        from: process.env.TWILIO_NUM_NOT_TOLL_FREE,
                                         to: customer.phoneNumber
                                     })
                                     .then(message =>
