@@ -135,9 +135,12 @@ export default class SignUp extends Component {
                         <label id="terms">
                             By clicking "pay with card" you agree to the{' '}
                             <span onClick={this.handleTOS}>
-                                Terms of Service, 
+                                Terms of Service,
                             </span>
-                            <span onClick={this.handlePP}> Privacy Policy,</span>{' '}
+                            <span onClick={this.handlePP}>
+                                {' '}
+                                Privacy Policy,
+                            </span>{' '}
                             and that all payment transactions will be handled
                             through{' '}
                             <span>
@@ -157,7 +160,7 @@ export default class SignUp extends Component {
                             description={
                                 'Daily Messages from LGBT Through History for ' +
                                 this.state.numOfMonths * 20 +
-                                ' days. If you need any support or encounter technical issues please contact lgbtthroughhsitory@gmail.com'
+                                ' days. If you need any support or encounter any technical issues such as not receiving the messages; please contact lgbtthroughhisitory@gmail.com. This website was made and is managed by a single person not a company, so I personally thank you for your patronship.'
                             }
                             amount={this.state.numOfMonths * 500}
                             phone={this.state.phoneNumber}
