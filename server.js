@@ -64,7 +64,7 @@ if (process.env.NODE_ENV === 'production') {
 */
 
 //Send SMS to everyone in the database
-cron.schedule('15 23 * * * ', function() {
+cron.schedule('26 23 * * * ', function() {
     let currentTextLocation = 0;
     let currentTextBody = '';
 
@@ -106,7 +106,7 @@ cron.schedule('15 23 * * * ', function() {
                                     })
                                     .then(message => {
                                         console.log(message.status);
-                                        if (message.status === 'Queued') {
+                                        if (message.status === 'queued') {
                                             doc.credits = doc.credits - 1; // Update customer credits to reflect newest sent message
                                             doc.lastMessaged = new Date(); // Update the last time they were messaged
                                             doc.save(); // Update customer
