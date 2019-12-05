@@ -104,9 +104,14 @@ cron.schedule('1 14 * * * ', function() {
                                         from: process.env.TWILIO_NUM_TOLL_FREE,
                                         to: customer.phoneNumber
                                     })
-                                    .then(message =>
-                                        console.log(message.status)
-                                    )
+                                    .then(message => {
+                                        console.log(message.status);
+                                        if (message.status === 'Queued') {
+                                            doc.credits = doc.credits - 1; // Update customer credits to reflect newest sent message
+                                            doc.lastMessaged = new Date(); // Update the last time they were messaged
+                                            doc.save(); // Update customer
+                                        }
+                                    })
                                     .catch(e => {
                                         if (e.code == '21610') {
                                             customerModel
@@ -136,9 +141,6 @@ cron.schedule('1 14 * * * ', function() {
                             } catch (err) {
                                 console.log('error: ' + err);
                             }
-                            doc.credits = doc.credits - 1; // Update customer credits to reflect newest sent message
-                            doc.lastMessaged = new Date(); // Update the last time they were messaged
-                            doc.save(); // Update customer
                         }
                     });
                 });
@@ -184,7 +186,9 @@ cron.schedule('1 15 * * * ', function() {
                                 var message = client.messages
                                     .create({
                                         body: currentTextBody,
-                                        from: process.env.TWILIO_NUM_NOT_TOLL_FREE,
+                                        from:
+                                            process.env
+                                                .TWILIO_NUM_NOT_TOLL_FREE,
                                         to: customer.phoneNumber
                                     })
                                     .then(message =>
