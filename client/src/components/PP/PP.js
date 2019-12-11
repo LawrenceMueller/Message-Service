@@ -24,12 +24,10 @@ export default class PP extends Component {
                         You authorize that I may store any information that you provide
                         to LBGT Through History in any way that I see fit. You authorize
                         that I may use this stored information in order to send messages
-                        to phone numbers and emails that you provided to LBGT Though
+                        to email addresses that you provided to LBGT Though
                         History. You authorize Stripe to process your payment
                         information and authorize that Stripe may also send you messages
-                        via email. You authorize that I may use the services of Twilio
-                        in order to send messages to the phone numbers and emails that
-                        you provided. Any questions or concerns that you may have in
+                        via email. Any questions or concerns that you may have in
                         regards to the services provided by LBGT Through History should
                         be directed to lbgtthroughhistory@gmail.com.
                     </p>

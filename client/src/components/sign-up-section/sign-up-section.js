@@ -124,14 +124,14 @@ export default class SignUp extends Component {
                         </select>
                     </div>
                     <div className="group">
-                        <label id="phone-label">
+                        {/* <label id="phone-label">
                             Phone (with country code)
                         </label>
                         <PhoneInput
                             defaultCountry={'us'}
                             value={this.state.phoneNumber}
                             onChange={this.phoneChange}
-                        />
+                        /> */}
                         <label id="terms">
                             By clicking "pay with card" you agree to the{' '}
                             <span onClick={this.handleTOS}>

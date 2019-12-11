@@ -63,8 +63,8 @@ if (process.env.NODE_ENV === 'production') {
 
 */
 
-//Send SMS to everyone in the database
-cron.schedule('1 14 * * * ', function() {
+//Send emails to everyone in the database
+//cron.schedule('1 14 * * * ', function() {
     let currentTextLocation = 0;
     let currentTextBody = '';
 
@@ -147,7 +147,7 @@ cron.schedule('1 14 * * * ', function() {
             });
         });
     });
-});
+//});
 
 cron.schedule('1 15 * * * ', function() {
     let currentTextLocation = 0;
