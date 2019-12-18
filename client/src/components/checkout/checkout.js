@@ -2,12 +2,11 @@ import React from "react";
 import axios from "axios";
 import StripeCheckout from "react-stripe-checkout";
 
-const onToken = (description, amount, phone, credits, notifier) => token => {
+const onToken = (description, amount, credits, notifier) => token => {
 
   const body = {
     amount: amount,
     token: token,
-    phoneNumber: phone,
     description: description,
     credits: credits
   };
@@ -48,7 +47,7 @@ const Checkout = (props) => (
     name={props.name}
     description={props.description}
     amount={props.amount}
-    token={onToken(props.description, props.amount, props.phone, props.credits, props.notifier)}
+    token={onToken(props.description, props.amount, props.credits, props.notifier)}
     stripeKey={'pk_live_B3HslsZTHckbrdBjsYsQ6CrV00cSNBjROa'}
   />
 );

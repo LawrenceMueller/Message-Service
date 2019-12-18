@@ -6,9 +6,6 @@ import TOS from '../TOS/TOS';
 import PP from '../PP/PP';
 import HIW from '../HowItWorks/howItWorks';
 
-import PhoneInput from 'react-phone-input-2';
-import 'react-phone-input-2/dist/style.css';
-
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -17,14 +14,12 @@ export default class SignUp extends Component {
         super(props);
         this.state = {
             numOfMonths: 0,
-            phoneNumber: '',
             tosPage: false,
             ppPage: false,
             codeFromTransaction: 9
         };
 
         this.monthsChange = this.monthsChange.bind(this);
-        this.phoneChange = this.phoneChange.bind(this);
         this.handlePP = this.handlePP.bind(this);
         this.handleTOS = this.handleTOS.bind(this);
         this.changeResponseCode = this.changeResponseCode.bind(this);
@@ -38,10 +33,6 @@ export default class SignUp extends Component {
         this.setState({
             numOfMonths: event.target.value
         });
-    }
-
-    phoneChange(value) {
-        this.setState({ phoneNumber: value });
     }
 
     handleTOS() {
@@ -124,14 +115,6 @@ export default class SignUp extends Component {
                         </select>
                     </div>
                     <div className="group">
-                        {/* <label id="phone-label">
-                            Phone (with country code)
-                        </label>
-                        <PhoneInput
-                            defaultCountry={'us'}
-                            value={this.state.phoneNumber}
-                            onChange={this.phoneChange}
-                        /> */}
                         <label id="terms">
                             By clicking "pay with card" you agree to the{' '}
                             <span onClick={this.handleTOS}>
@@ -163,7 +146,6 @@ export default class SignUp extends Component {
                                 ' days. If you need any support or encounter any technical issues such as not receiving the messages; please contact lgbtthroughhisitory@gmail.com. This website was made and is managed by a single person not a company, so I personally thank you for your patronship.'
                             }
                             amount={this.state.numOfMonths * 500}
-                            phone={this.state.phoneNumber}
                             credits={this.state.numOfMonths * 20}
                             notifier={this.changeResponseCode}
                         />

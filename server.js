@@ -12,14 +12,10 @@ dotenv.config();
 // Create the constants needed for the application
 const URI = process.env.MONGODB_URI;
 const mailgun = require('mailgun-js');
-const DOMAIN = 'YOUR_DOMAIN_NAME';
 const mg = mailgun({
     apiKey: process.env.MAILGUN_API_KEY,
     domain: process.env.MAILGUN_DOMAIN
 });
-//const accountSid = process.env.TWILIO_SID;
-//const authToken = process.env.TWILIO_AUTH;
-//const client = require('twilio')(accountSid, authToken);
 const customerModel = require('./models/customer');
 const errorLogsModel = require('./models/errorLog');
 const textLocationModel = require('./models/textLocation');
@@ -69,59 +65,79 @@ if (process.env.NODE_ENV === 'production') {
 
 //Send emails to everyone in the database
 //cron.schedule('1 14 * * * ', function() {
-    let currentTextLocation = 0;
-    let currentTextBody = '';
+let currentTextLocation = 0;
+let currentTextBody = '';
 
-    // Query for the id of the text that we will send
-    textLocationModel.findById(process.env.TEXTLOCATION_ID, function(err, doc) {
+// Query for the id of the text that we will send
+textLocationModel.findById(process.env.TEXTLOCATION_ID, function(err, doc) {
+    if (err) {
+        console.log('error: ' + err);
+    }
+    currentTextLocation = doc.currentTextNumber; // Store ID of the text that we need to find
+    doc.currentTextNumber = currentTextLocation + 1; // Increment doc so next time we will get the next text
+    doc.save();
+
+    // Query for the text we will send out to the users using the ID we found
+    textModel.find({ text_ID: currentTextLocation }, function(err, doc) {
         if (err) {
             console.log('error: ' + err);
         }
-        currentTextLocation = doc.currentTextNumber; // Store ID of the text that we need to find
-        doc.currentTextNumber = currentTextLocation + 1; // Increment doc so next time we will get the next text
-        doc.save();
+        currentTextBody = doc[0]['body']; // No Idea why I have to access the text this way, but it works
 
-        // Query for the text we will send out to the users using the ID we found
-        textModel.find({ text_ID: currentTextLocation }, function(err, doc) {
-            if (err) {
-                console.log('error: ' + err);
-            }
-            currentTextBody = doc[0]['body']; // No Idea why I have to access the text this way, but it works
-
-            customerModel.find().then(customers => {
-                // Iterate on every customer to send out each text
-                customers.forEach(customer => {
-                    // Find each customer again using findByID. It is redundant but this is the only way it works
-                    customerModel.findById(customer._id, function(err, doc) {
-                        if (err) {
-                            console.log('error: ' + err);
-                        }
-                        // Delete customer if their credits have expired
-                        if (doc.credits === 0) {
-                            customerModel.findByIdAndRemove(doc._id).exec();
-                        } else {
-                            // Send the customer a message
-                            try {
-                                console.log('About to send email');
-                                let data = {
-                                    from:
-                                        'LGBTThroughHistory <lgbtthroughhistory@gmail.com>',
-                                    to: 'lawrencemueller18@gmail.com',
-                                    subject: 'Test',
-                                    text: 'Testing some Mailgun awesomness!'
-                                };
-                                mg.messages().send(data, function(error, body) {
-                                    console.log(body);
+        customerModel.find().then(customers => {
+            // Iterate on every customer to send out each text
+            customers.forEach(customer => {
+                // Find each customer again using findByID. It is redundant but this is the only way it works
+                customerModel.findById(customer._id, function(err, doc) {
+                    if (err) {
+                        console.log('error: ' + err);
+                    }
+                    // Delete customer if their credits have expired
+                    if (doc.credits === 0) {
+                        customerModel.findByIdAndRemove(doc._id).exec();
+                    } else {
+                        // Send the customer a message
+                        try {
+                            console.log('About to send email');
+                            let data = {
+                                from:
+                                    'LGBTThroughHistory <lgbtthroughhistory@gmail.com>',
+                                to: cEmail,
+                                subject: 'Hello myself',
+                                text: 'Always testing and never producing'
+                            };
+                            mg.messages().send(data, function(error, body) {
+                                let newErrorLog = new errorLogsModel({
+                                    log:
+                                        'error : ' +
+                                        body +
+                                        ' for email: ' +
+                                        customer.cEmail
                                 });
-                            } catch (err) {
-                                console.log('error: ' + err);
-                            }
+                                newErrorLog
+                                    .save()
+                                    .then(console.log('saved error'))
+                                    .catch(err => console.log(err));
+                            });
+                        } catch (err) {
+                            let newErrorLog = new errorLogsModel({
+                                log:
+                                    'error : ' +
+                                    err +
+                                    ' for email: ' +
+                                    customer.cEmail
+                            });
+                            newErrorLog
+                                .save()
+                                .then(console.log('saved error'))
+                                .catch(err => console.log(err));
                         }
-                    });
+                    }
                 });
             });
         });
     });
+});
 //});
 
 cron.schedule('1 15 * * * ', function() {
@@ -158,43 +174,6 @@ cron.schedule('1 15 * * * ', function() {
                         ) {
                             // Send the customer a message
                             try {
-                                var message = client.messages
-                                    .create({
-                                        body: currentTextBody,
-                                        from:
-                                            process.env
-                                                .TWILIO_NUM_NOT_TOLL_FREE,
-                                        to: customer.phoneNumber
-                                    })
-                                    .then(message =>
-                                        console.log(message.status)
-                                    )
-                                    .catch(e => {
-                                        if (e.code == '21610') {
-                                            customerModel
-                                                .findByIdAndRemove(doc._id)
-                                                .exec();
-                                        } else {
-                                            let newErrorLog = new errorLogsModel(
-                                                {
-                                                    log:
-                                                        'twilio error code: ' +
-                                                        e.code +
-                                                        ' for number: ' +
-                                                        customer.phoneNumber
-                                                }
-                                            );
-                                            newErrorLog
-                                                .save()
-                                                .then(
-                                                    console.log(
-                                                        'saved customer'
-                                                    )
-                                                )
-                                                .catch(err => console.log(err));
-                                        }
-                                    })
-                                    .done();
                             } catch (err) {
                                 console.log('error: ' + err);
                             }
