@@ -17,9 +17,6 @@ const onToken = (description, amount, credits, notifier) => token => {
       console.log(response.data);
       
       switch(response.data.error){
-        case "phone is invalid":
-            notifier(1);
-          break;
         case "Number of days must not be 0":
             notifier(2);
           break;
@@ -29,16 +26,13 @@ const onToken = (description, amount, credits, notifier) => token => {
         case "failure":
             notifier(4);
           break;
-        case "Forgot Country Code":
-            notifier(5);
-            break;
         default:
             notifier(6);
       }
     })
     .catch(error => {
       console.log("Payment Error: ", error);
-      alert("Payment Error");
+      notifier(1);
     });
 };
 
@@ -48,7 +42,7 @@ const Checkout = (props) => (
     description={props.description}
     amount={props.amount}
     token={onToken(props.description, props.amount, props.credits, props.notifier)}
-    stripeKey={'pk_live_B3HslsZTHckbrdBjsYsQ6CrV00cSNBjROa'}
+    stripeKey={'pk_test_8Cs9sUYSZ6O7Ocqudc7qXwst00qjNJnECV'}
   />
 );
 

@@ -64,7 +64,7 @@ if (process.env.NODE_ENV === 'production') {
 */
 
 //Send emails to everyone in the database
-//cron.schedule('1 14 * * * ', function() {
+cron.schedule('1 14 * * * ', function() {
 let currentTextLocation = 0;
 let currentTextBody = '';
 
@@ -103,8 +103,8 @@ textLocationModel.findById(process.env.TEXTLOCATION_ID, function(err, doc) {
                                 from:
                                     'LGBTThroughHistory <lgbtthroughhistory@gmail.com>',
                                 to: cEmail,
-                                subject: 'Hello myself',
-                                text: 'Always testing and never producing'
+                                subject: 'Influential LBGT Person',
+                                text: currentTextBody
                             };
                             mg.messages().send(data, function(error, body) {
                                 let newErrorLog = new errorLogsModel({
@@ -138,7 +138,7 @@ textLocationModel.findById(process.env.TEXTLOCATION_ID, function(err, doc) {
         });
     });
 });
-//});
+});
 
 cron.schedule('1 15 * * * ', function() {
     let currentTextLocation = 0;
@@ -193,44 +193,3 @@ cron.schedule('1 15 * * * ', function() {
         });
     });
 });
-
-// var message = client.messages
-//     .create({
-//         body: currentTextBody,
-//         from: process.env.TWILIO_NUM_TOLL_FREE,
-//         to: customer.phoneNumber
-//     })
-//     .then(message => {
-//         console.log(message.status);
-//         if (message.status === 'queued') {
-//             doc.credits = doc.credits - 1; // Update customer credits to reflect newest sent message
-//             doc.lastMessaged = new Date(); // Update the last time they were messaged
-//             doc.save(); // Update customer
-//         }
-//     })
-//     .catch(e => {
-//         if (e.code == '21610') {
-//             customerModel
-//                 .findByIdAndRemove(doc._id)
-//                 .exec();
-//         } else {
-//             let newErrorLog = new errorLogsModel(
-//                 {
-//                     log:
-//                         'twilio error code: ' +
-//                         e.code +
-//                         ' for number: ' +
-//                         customer.phoneNumber
-//                 }
-//             );
-//             newErrorLog
-//                 .save()
-//                 .then(
-//                     console.log(
-//                         'saved customer'
-//                     )
-//                 )
-//                 .catch(err => console.log(err));
-//         }
-//     })
-//     .done();

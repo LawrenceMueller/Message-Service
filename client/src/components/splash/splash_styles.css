@@ -28,3 +28,8 @@
     margin-top: 0;
     margin-bottom: 0.5em;
 }
+
+.hero h2{
+    margin-left: 10px;
+    margin-right: 10px;
+}

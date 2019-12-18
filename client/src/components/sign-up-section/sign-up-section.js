@@ -58,7 +58,7 @@ export default class SignUp extends Component {
             case 1:
                 this.changeResponseCode(0);
                 return toast.warn(
-                    "The phone you entered was invalid, don't worry you were not charged. If you need to feel free to email lgbtthroughhistory@gmail.com for support"
+                    "An error happened with the payment! You were not charged so don't worry. You should try again and make sure all the information is correct and valid."
                 );
             case 2:
                 this.changeResponseCode(0);
@@ -74,11 +74,6 @@ export default class SignUp extends Component {
                 this.changeResponseCode(0);
                 return toast.warn(
                     'Something went wrong on our side. You were not charged. Might want to please try again later'
-                );
-            case 5:
-                this.changeResponseCode(0);
-                return toast.warn(
-                    'We missed your country code. You were not charged, please try again.'
                 );
             case 6:
                 this.changeResponseCode(0);

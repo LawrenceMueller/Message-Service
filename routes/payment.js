@@ -4,7 +4,7 @@ const router = express.Router();
 const uuid = require('uuid/v4');
 
 // Get required instances
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY_TEST);
 
 // Import models for DB stuff
 const customerModel = require('../models/customer');
