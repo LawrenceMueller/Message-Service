@@ -25,7 +25,7 @@ export default class SignUp extends Component {
         this.changeResponseCode = this.changeResponseCode.bind(this);
 
         toast.configure({
-            autoClose: 8000
+            autoClose: 9000
         });
     }
 

@@ -7,7 +7,6 @@ let ReceiptSchema = new Schema({
         required: true,
         lowercase: true,
       },
-    phoneNumber: {type: String, required: true},
     credits: {type: Number, required: true},
 }, {timestamps: true});
 

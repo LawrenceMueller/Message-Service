@@ -65,52 +65,64 @@ if (process.env.NODE_ENV === 'production') {
 
 //Send emails to everyone in the database
 cron.schedule('1 14 * * * ', function() {
-let currentTextLocation = 0;
-let currentTextBody = '';
+    let currentTextLocation = 0;
+    let currentTextBody = '';
 
-// Query for the id of the text that we will send
-textLocationModel.findById(process.env.TEXTLOCATION_ID, function(err, doc) {
-    if (err) {
-        console.log('error: ' + err);
-    }
-    currentTextLocation = doc.currentTextNumber; // Store ID of the text that we need to find
-    doc.currentTextNumber = currentTextLocation + 1; // Increment doc so next time we will get the next text
-    doc.save();
-
-    // Query for the text we will send out to the users using the ID we found
-    textModel.find({ text_ID: currentTextLocation }, function(err, doc) {
+    // Query for the id of the text that we will send
+    textLocationModel.findById(process.env.TEXTLOCATION_ID, function(err, doc) {
         if (err) {
             console.log('error: ' + err);
         }
-        currentTextBody = doc[0]['body']; // No Idea why I have to access the text this way, but it works
+        currentTextLocation = doc.currentTextNumber; // Store ID of the text that we need to find
+        doc.currentTextNumber = currentTextLocation + 1; // Increment doc so next time we will get the next text
+        doc.save();
 
-        customerModel.find().then(customers => {
-            // Iterate on every customer to send out each text
-            customers.forEach(customer => {
-                // Find each customer again using findByID. It is redundant but this is the only way it works
-                customerModel.findById(customer._id, function(err, doc) {
-                    if (err) {
-                        console.log('error: ' + err);
-                    }
-                    // Delete customer if their credits have expired
-                    if (doc.credits === 0) {
-                        customerModel.findByIdAndRemove(doc._id).exec();
-                    } else {
-                        // Send the customer a message
-                        try {
-                            console.log('About to send email');
-                            let data = {
-                                from:
-                                    'LGBTThroughHistory <lgbtthroughhistory@gmail.com>',
-                                to: cEmail,
-                                subject: 'Influential LBGT Person',
-                                text: currentTextBody
-                            };
-                            mg.messages().send(data, function(error, body) {
+        // Query for the text we will send out to the users using the ID we found
+        textModel.find({ text_ID: currentTextLocation }, function(err, doc) {
+            if (err) {
+                console.log('error: ' + err);
+            }
+            currentTextBody = doc[0]['body']; // No Idea why I have to access the text this way, but it works
+
+            customerModel.find().then(customers => {
+                // Iterate on every customer to send out each text
+                customers.forEach(customer => {
+                    // Find each customer again using findByID. It is redundant but this is the only way it works
+                    customerModel.findById(customer._id, function(err, doc) {
+                        if (err) {
+                            console.log('error: ' + err);
+                        }
+                        // Delete customer if their credits have expired
+                        if (doc.credits === 0) {
+                            customerModel.findByIdAndRemove(doc._id).exec();
+                        } else {
+                            // Send the customer a message
+                            try {
+                                let data = {
+                                    from:
+                                        'LGBTThroughHistory <lgbtthroughhistory@gmail.com>',
+                                    to: cEmail,
+                                    subject: 'Influential LBGT Person',
+                                    text: currentTextBody
+                                };
+                                mg.messages().send(data, function(error, body) {
+                                    let newErrorLog = new errorLogsModel({
+                                        log:
+                                            'error : ' +
+                                            body +
+                                            ' for email: ' +
+                                            customer.cEmail
+                                    });
+                                    newErrorLog
+                                        .save()
+                                        .then(console.log('saved error'))
+                                        .catch(err => console.log(err));
+                                });
+                            } catch (err) {
                                 let newErrorLog = new errorLogsModel({
                                     log:
                                         'error : ' +
-                                        body +
+                                        err +
                                         ' for email: ' +
                                         customer.cEmail
                                 });
@@ -118,26 +130,13 @@ textLocationModel.findById(process.env.TEXTLOCATION_ID, function(err, doc) {
                                     .save()
                                     .then(console.log('saved error'))
                                     .catch(err => console.log(err));
-                            });
-                        } catch (err) {
-                            let newErrorLog = new errorLogsModel({
-                                log:
-                                    'error : ' +
-                                    err +
-                                    ' for email: ' +
-                                    customer.cEmail
-                            });
-                            newErrorLog
-                                .save()
-                                .then(console.log('saved error'))
-                                .catch(err => console.log(err));
+                            }
                         }
-                    }
+                    });
                 });
             });
         });
     });
-});
 });
 
 cron.schedule('1 15 * * * ', function() {
@@ -174,8 +173,38 @@ cron.schedule('1 15 * * * ', function() {
                         ) {
                             // Send the customer a message
                             try {
+                                let data = {
+                                    from:
+                                        'LGBTThroughHistory <lgbtthroughhistory@gmail.com>',
+                                    to: cEmail,
+                                    subject: 'Influential LBGT Person',
+                                    text: currentTextBody
+                                };
+                                mg.messages().send(data, function(error, body) {
+                                    let newErrorLog = new errorLogsModel({
+                                        log:
+                                            'error : ' +
+                                            body +
+                                            ' for email: ' +
+                                            customer.cEmail
+                                    });
+                                    newErrorLog
+                                        .save()
+                                        .then(console.log('saved error'))
+                                        .catch(err => console.log(err));
+                                });
                             } catch (err) {
-                                console.log('error: ' + err);
+                                let newErrorLog = new errorLogsModel({
+                                    log:
+                                        'error : ' +
+                                        err +
+                                        ' for email: ' +
+                                        customer.cEmail
+                                });
+                                newErrorLog
+                                    .save()
+                                    .then(console.log('saved error'))
+                                    .catch(err => console.log(err));
                             }
                             doc.credits = doc.credits - 1; // Update customer credits to reflect newest sent message
                             doc.lastMessaged = new Date(); // Update the last time they were messaged
