@@ -4,18 +4,22 @@ const express = require('express');
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 const cron = require('node-cron');
-const fs = require('fs');
 const path = require('path');
-const Nexmo = require('nexmo');
 
 // Configure dotenv for security purposes
 dotenv.config();
 
 // Create the constants needed for the application
 const URI = process.env.MONGODB_URI;
-const accountSid = process.env.TWILIO_SID;
-const authToken = process.env.TWILIO_AUTH;
-const client = require('twilio')(accountSid, authToken);
+const mailgun = require('mailgun-js');
+const DOMAIN = 'YOUR_DOMAIN_NAME';
+const mg = mailgun({
+    apiKey: process.env.MAILGUN_API_KEY,
+    domain: process.env.MAILGUN_DOMAIN
+});
+//const accountSid = process.env.TWILIO_SID;
+//const authToken = process.env.TWILIO_AUTH;
+//const client = require('twilio')(accountSid, authToken);
 const customerModel = require('./models/customer');
 const errorLogsModel = require('./models/errorLog');
 const textLocationModel = require('./models/textLocation');
@@ -59,7 +63,7 @@ if (process.env.NODE_ENV === 'production') {
 
 /*
 
-    In the future I should 100% seperate the code below this line into its own files.
+    In the future I should seperate the code below this line into its own files.
 
 */
 
@@ -98,46 +102,17 @@ if (process.env.NODE_ENV === 'production') {
                         } else {
                             // Send the customer a message
                             try {
-                                var message = client.messages
-                                    .create({
-                                        body: currentTextBody,
-                                        from: process.env.TWILIO_NUM_TOLL_FREE,
-                                        to: customer.phoneNumber
-                                    })
-                                    .then(message => {
-                                        console.log(message.status);
-                                        if (message.status === 'queued') {
-                                            doc.credits = doc.credits - 1; // Update customer credits to reflect newest sent message
-                                            doc.lastMessaged = new Date(); // Update the last time they were messaged
-                                            doc.save(); // Update customer
-                                        }
-                                    })
-                                    .catch(e => {
-                                        if (e.code == '21610') {
-                                            customerModel
-                                                .findByIdAndRemove(doc._id)
-                                                .exec();
-                                        } else {
-                                            let newErrorLog = new errorLogsModel(
-                                                {
-                                                    log:
-                                                        'twilio error code: ' +
-                                                        e.code +
-                                                        ' for number: ' +
-                                                        customer.phoneNumber
-                                                }
-                                            );
-                                            newErrorLog
-                                                .save()
-                                                .then(
-                                                    console.log(
-                                                        'saved customer'
-                                                    )
-                                                )
-                                                .catch(err => console.log(err));
-                                        }
-                                    })
-                                    .done();
+                                console.log('About to send email');
+                                let data = {
+                                    from:
+                                        'LGBTThroughHistory <lgbtthroughhistory@gmail.com>',
+                                    to: 'lawrencemueller18@gmail.com',
+                                    subject: 'Test',
+                                    text: 'Testing some Mailgun awesomness!'
+                                };
+                                mg.messages().send(data, function(error, body) {
+                                    console.log(body);
+                                });
                             } catch (err) {
                                 console.log('error: ' + err);
                             }
@@ -239,3 +214,44 @@ cron.schedule('1 15 * * * ', function() {
         });
     });
 });
+
+// var message = client.messages
+//     .create({
+//         body: currentTextBody,
+//         from: process.env.TWILIO_NUM_TOLL_FREE,
+//         to: customer.phoneNumber
+//     })
+//     .then(message => {
+//         console.log(message.status);
+//         if (message.status === 'queued') {
+//             doc.credits = doc.credits - 1; // Update customer credits to reflect newest sent message
+//             doc.lastMessaged = new Date(); // Update the last time they were messaged
+//             doc.save(); // Update customer
+//         }
+//     })
+//     .catch(e => {
+//         if (e.code == '21610') {
+//             customerModel
+//                 .findByIdAndRemove(doc._id)
+//                 .exec();
+//         } else {
+//             let newErrorLog = new errorLogsModel(
+//                 {
+//                     log:
+//                         'twilio error code: ' +
+//                         e.code +
+//                         ' for number: ' +
+//                         customer.phoneNumber
+//                 }
+//             );
+//             newErrorLog
+//                 .save()
+//                 .then(
+//                     console.log(
+//                         'saved customer'
+//                     )
+//                 )
+//                 .catch(err => console.log(err));
+//         }
+//     })
+//     .done();
