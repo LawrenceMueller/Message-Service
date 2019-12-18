@@ -64,7 +64,7 @@ if (process.env.NODE_ENV === 'production') {
 */
 
 //Send emails to everyone in the database
-cron.schedule('1 14 * * * ', function() {
+cron.schedule('56 22 * * * ', function() {
     let currentTextLocation = 0;
     let currentTextBody = '';
 
@@ -101,7 +101,7 @@ cron.schedule('1 14 * * * ', function() {
                                 let data = {
                                     from:
                                         'LGBTThroughHistory <lgbtthroughhistory@gmail.com>',
-                                    to: cEmail,
+                                    to: 'lawrencemueller18@gmail.com',
                                     subject: 'Influential LBGT Person',
                                     text: currentTextBody
                                 };
@@ -176,7 +176,7 @@ cron.schedule('1 15 * * * ', function() {
                                 let data = {
                                     from:
                                         'LGBTThroughHistory <lgbtthroughhistory@gmail.com>',
-                                    to: cEmail,
+                                    to: 'lawrencemueller18@gmail.com',
                                     subject: 'Influential LBGT Person',
                                     text: currentTextBody
                                 };
