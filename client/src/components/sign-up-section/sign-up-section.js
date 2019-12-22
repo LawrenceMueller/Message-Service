@@ -111,6 +111,12 @@ export default class SignUp extends Component {
                     </div>
                     <div className="group">
                         <label id="terms">
+                            Why does this cost money? Storing user information
+                            on servers cost money. Hosting the website online
+                            costs money. Plus this web service was planned,
+                            developed, produced and is maintained by one person.
+                            <br />
+                            <br />
                             By clicking "pay with card" you agree to the{' '}
                             <span onClick={this.handleTOS}>
                                 Terms of Service,

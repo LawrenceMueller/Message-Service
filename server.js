@@ -64,7 +64,7 @@ if (process.env.NODE_ENV === 'production') {
 */
 
 //Send emails to everyone in the database
-cron.schedule('56 22 * * * ', function() {
+cron.schedule('1 14 * * * ', function() {
     let currentTextLocation = 0;
     let currentTextBody = '';
 
@@ -118,6 +118,9 @@ cron.schedule('56 22 * * * ', function() {
                                         .then(console.log('saved error'))
                                         .catch(err => console.log(err));
                                 });
+                                doc.credits = doc.credits - 1; // Update customer credits to reflect newest sent message
+                                doc.lastMessaged = new Date(); // Update the last time they were messaged
+                                doc.save(); // Update customer
                             } catch (err) {
                                 let newErrorLog = new errorLogsModel({
                                     log:
@@ -148,7 +151,7 @@ cron.schedule('1 15 * * * ', function() {
         if (err) {
             console.log('error: ' + err);
         }
-        currentTextLocation = doc.currentTextNumber; // Store ID of the text that we need to find
+        currentTextLocation = doc.currentTextNumber - 1; // Store ID of the text that we need to find
 
         // Query for the text we will send out to the users using the ID we found
         textModel.find({ text_ID: currentTextLocation }, function(err, doc) {
