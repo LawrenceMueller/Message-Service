@@ -12,7 +12,7 @@ const onToken = (description, amount, credits, notifier) => token => {
   };
 
   axios
-    .post('http://localhost:8080/payment', body)
+    .post('http://www.lgbtthroughhistory.com/payment', body)
     .then(response => {
       console.log(response.data);
       
@@ -42,7 +42,7 @@ const Checkout = (props) => (
     description={props.description}
     amount={props.amount}
     token={onToken(props.description, props.amount, props.credits, props.notifier)}
-    stripeKey={'pk_test_8Cs9sUYSZ6O7Ocqudc7qXwst00qjNJnECV'}
+    stripeKey={'pk_live_B3HslsZTHckbrdBjsYsQ6CrV00cSNBjROa'}
   />
 );
 
