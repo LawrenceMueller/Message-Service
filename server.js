@@ -58,9 +58,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 /*
-
     In the future I should seperate the code below this line into its own files.
-
 */
 
 //Send emails to everyone in the database
