@@ -103,10 +103,10 @@ export default class SignUp extends Component {
                             onChange={this.monthsChange}
                         >
                             <option value="0">0</option>
-                            <option value="1">20 - $5</option>
-                            <option value="2">40 - $10</option>
-                            <option value="3">60 - $15</option>
-                            <option value="4">80 - $20</option>
+                            <option value="1">5 - $1</option>
+                            <option value="2">10 - $2</option>
+                            <option value="3">15 - $3</option>
+                            <option value="4">All 20 - $4</option>
                         </select>
                     </div>
                     <div className="group">
@@ -154,7 +154,7 @@ export default class SignUp extends Component {
                             Total is: $
                             {this.state.numOfMonths === null
                                 ? 0
-                                : this.state.numOfMonths * 5}
+                                : this.state.numOfMonths * 1}
                         </h4>
                     </div>
                 </div>
