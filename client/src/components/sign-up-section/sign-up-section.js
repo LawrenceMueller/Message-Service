@@ -143,7 +143,7 @@ export default class SignUp extends Component {
                             name={'LGBT Through History'}
                             description={
                                 'Daily Messages from LGBT Through History for ' +
-                                this.state.numOfMonths * 20 +
+                                this.state.numOfMonths * 5 +
                                 ' days. If you need any support or encounter any technical issues such as not receiving the messages; please contact lgbtthroughhisitory@gmail.com. This website was made and is managed by a single person not a company, so I personally thank you for your patronship.'
                             }
                             amount={this.state.numOfMonths * 100}
