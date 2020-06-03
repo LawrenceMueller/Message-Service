@@ -146,8 +146,8 @@ export default class SignUp extends Component {
                                 this.state.numOfMonths * 20 +
                                 ' days. If you need any support or encounter any technical issues such as not receiving the messages; please contact lgbtthroughhisitory@gmail.com. This website was made and is managed by a single person not a company, so I personally thank you for your patronship.'
                             }
-                            amount={this.state.numOfMonths * 500}
-                            credits={this.state.numOfMonths * 20}
+                            amount={this.state.numOfMonths * 100}
+                            credits={this.state.numOfMonths * 5}
                             notifier={this.changeResponseCode}
                         />
                         <h4>
