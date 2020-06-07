@@ -73,6 +73,9 @@ cron.schedule('1 14 * * * ', function() {
         }
         currentTextLocation = doc.currentTextNumber; // Store ID of the text that we need to find
         doc.currentTextNumber = currentTextLocation + 1; // Increment doc so next time we will get the next text
+        if(doc.currentTextNumber > 20){
+           doc.currentTextNumber = 1;
+        }
         doc.save();
 
         // Query for the text we will send out to the users using the ID we found
