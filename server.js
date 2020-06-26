@@ -62,7 +62,7 @@ if (process.env.NODE_ENV === 'production') {
 */
 
 //Send emails to everyone in the database
-cron.schedule('1 14 * * * ', function() {
+cron.schedule('30 13 * * * ', function() {
     let currentTextLocation = 0;
     let currentTextBody = '';
 
@@ -143,7 +143,7 @@ cron.schedule('1 14 * * * ', function() {
     });
 });
 
-cron.schedule('1 15 * * * ', function() {
+cron.schedule('45 13 * * * ', function() {
     let currentTextLocation = 0;
     let currentTextBody = '';
 
