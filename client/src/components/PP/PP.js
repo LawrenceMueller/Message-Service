@@ -33,7 +33,8 @@ export default class PP extends Component {
                         that Stripe may also send you messages via email. Any
                         questions or concerns that you may have in regards to
                         the services provided by LGBT Through History should be
-                        directed to lgbtthroughhistory@gmail.com.
+                        directed to lgbtthroughhistory@gmail.com. This document
+                        was last updated 6/26/2020
                      </p>
                   </div>
                </div>

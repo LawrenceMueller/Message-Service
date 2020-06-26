@@ -47,8 +47,8 @@ export default class TOS extends Component {
                         History will not offer any refund of any kind for any
                         reason. You agree not to steal, take, modify,
                         redistribute, or use my intellectural property in any
-                        way including commercial and non-commercial that is not
-                        intended.
+                        commercial or non-commercial way that is not
+                        intended by myself.
                      </p>
                      <br />
                      <p>
@@ -65,7 +65,7 @@ export default class TOS extends Component {
                         Through History and the services provided by LGBT
                         Through History. I may ammend or change both the terms
                         of service agreement and privacy policy at any time. The
-                        last time this document was updated was 12/19/2019.
+                        last time this document was updated was 6/26/2020.
                      </p>
                   </div>
                </div>
